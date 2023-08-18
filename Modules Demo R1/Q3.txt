@@ -1,0 +1,46 @@
+import React, { useState } from 'react';
+
+const StyledMsg = () => {
+  const [color, setColor] = useState('magenta');
+  const [size, setSize] = useState(16);
+
+  const handleChangeColor = (e) => {
+    setColor(e.target.value);
+  };
+
+  const handleChangeSize = (e) => {
+    setSize(Number(e.target.value));
+  };
+
+  const msgStyle = {
+    color: color,
+    fontSize: `${size}px`,
+  };
+
+  return (
+    <div>
+      <h2 style={msgStyle}>Welcome to React</h2>
+      <div>
+        <label htmlFor="colorInput">Enter Color:</label>
+        <select id="colorInput" value={color} onChange={handleChangeColor}>
+          <option value="black">Black</option>
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="sizeInput">Enter Size:</label>
+        <input
+          type="number"
+          id="sizeInput"
+          value={size}
+          onChange={handleChangeSize}
+        />
+      </div>
+      
+    </div>
+  );
+};
+
+export default StyledMsg;
