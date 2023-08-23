@@ -4,12 +4,12 @@ import ProductListComp from "./ProductListComp";
 import PartListComp from "./PartListComp";
 import RawMaterialListComp from "./RawMaterialListComp";
 import MachineListComp from "./MachineListCom";
+import VendorComp from "./VendorComp";
 
 
 function SetupComp(){
     return(
-        <div class container>
-        <div class= 'row'>
+        
             <div class="col-md-4 ">
             <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
               
@@ -27,8 +27,10 @@ function SetupComp(){
                 <ul className="navbar-nav flex-column">
                 
                 <li className="nav-item">
-            <Link to="/productlist" className="nav-link px-3">Product List</Link>
-          </li>
+                <Link to="/productlist" className="nav-link" href="#">
+                  Product List
+                </Link>
+              </li>
           <li className="nav-item">
             <Link to="/partlist" className="nav-link px-3">Part List</Link>
           </li>
@@ -39,34 +41,28 @@ function SetupComp(){
             <Link to="/machinelist" className="nav-link px-3">Machine List</Link>
           </li>
           <li className="nav-item">
-            <Link to="vendors" className="nav-link px-3">Vendors</Link>
+            <Link to="/vendors" className="nav-link px-3">Vendors</Link>
           </li>
           <li className="nav-item">
             <Link to="cpm" className="nav-link px-3">CPM</Link>
           </li>
                </ul>
               </div>
-                    
+             <div>
+                  <Routes>
+                    <Route path='productlist' element={<ProductListComp/>}/>
+                    <Route path='partlist' element={<PartListComp/>}/>
+                    <Route path="rawmateriallist" element={<RawMaterialListComp/>}/>
+                    <Route path="machinelist" element={<MachineListComp/>}/>
+                    <Route path="vendors" element={<VendorComp/>}/>
+                  </Routes>
+                  
+                  </div> 
+   
         </nav>
 
             </div>
-            <div container>
-              <div row>
-                  <div>
-                    
-                  </div>
-              </div>
-              
-            </div>
-        </div>
-        <Routes>
-        <Route path='productlist' element={<ProductListComp/>}/>
-        <Route path='partlist' element={<PartListComp/>}/>
-        <Route path="rawmateriallist" element={<RawMaterialListComp/>}/>
-        <Route path="machinelist" element={<MachineListComp/>}/>
-        </Routes>
-        </div>
-        
+  
     )
 }
 
