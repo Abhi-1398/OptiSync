@@ -49,9 +49,7 @@ function App() {
         <Route path='/' element={<HomeComp/>}/>
         <Route path='login' element={<LoginComp/>}/>
         <Route path='register' element={<RegistrationComp/>}/>
-        
-        
-       
+
       </Routes>
 
       
