@@ -1,90 +1,74 @@
-import React, { useState } from "react";
-
+import React, { useReducer } from "react";
+ 
 export default function ProductListComp() {
-  const [productData, setProductData] = useState([]);
-  const [productName, setProductName] = useState("");
-  const [description, setDescription] = useState("");
 
-  const handleProductNameChange = (event) => {
-    setProductName(event.target.value);
-  };
+  const initialState={
+    product_name:"",
+    product_description:""  
+  }
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+const reducer = (state, action) => {
+  switch(action.type) {
+       case 'update':
+          return {...state, [action.fld]:action.val }
+       case 'reset':
+          return initialState
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newProduct = { productName, description };
-    setProductData([...productData, newProduct]);
-    setProductName("");
-    setDescription("");
-  };
+}
+
+const[formData, dispatch] = useReducer(reducer , initialState );
+
+const sendData = (e) => {
+  e.preventDefault();
+
+  const reqOption = {
+   method:'POST',
+   headers:{'content-type':'application/json'},
+   body: JSON.stringify(formData)
+  }
+
+  fetch("http://localhost:8080/saveProducts",reqOption)
+  .then(resp => {if(resp.ok)
+   return resp.text();
+  else
+   throw new Error("server error");
+  })
+  .then(text => text.length ? JSON.parse(text) : {})
+  .catch((Error)=>alert("server error . try again later")) 
+  console.log(formData) 
+}
 
   return (
     <div>
       <h1>Product Details</h1>
       <div className="mb-2">
         <div className="form-row">
-          <label htmlFor="productName">Product name:</label>
-          <input
-            type="text"
-            name="productName"
-            className="form-control"
-            id="productName"
-            value={productName}
-            onChange={handleProductNameChange}
-          />
+          <label htmlFor="product_name">Product name:</label>
+          <input type="text" name="product_name" className="form-control" id="product_name" value={formData.product_name}
+          onChange={(e)=>{dispatch({type:'update',fld:'product_name',val:e.target.value})}} required />
+                 
         </div>
+
         <div className="mb-2">
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="product_description">Description:</label>
           <input
-            type="text"
-            name="description"
+            type="textarea"
+            name="product_description"
             className="form-control"
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
+            id="product_description"
+            value={formData.product_description}
+                    onChange={(e)=>{dispatch({type:'update',fld:'product_description',val:e.target.value})}} required />
+         
         </div>
       </div>
 
-      <button type="submit" className="btn btn-primary btn-sm" onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className="submit-button-container">
+            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button>
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
+          </div>
 
-      <button
-        type="reset"
-        className="btn btn-primary btn-sm"
-        onClick={() => {
-          setProductName("");
-          setDescription("");
-        }}
-      >
-        Clear
-      </button>
-
-      {productData.length > 0 && (
-        <div>
-          <h2>Entered Product Data</h2>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productData.map((product, index) => (
-                <tr key={index}>
-                  <td>{product.productName}</td>
-                  <td>{product.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+<p>{JSON.stringify(formData)}</p>
     </div>
   );
 }

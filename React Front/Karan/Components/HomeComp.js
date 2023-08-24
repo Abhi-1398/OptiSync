@@ -1,8 +1,10 @@
 export default function HomeComponent(){
     return(
+        
         <div className="login template d-flex justify-content-center allign-items-center 100-w 100-vh bg-primary">
             <div className="w-100 p-3" style={{ backgroundColor: "#eee" }}>
-            
+    
+           
              <h3>
         OptiSync allows management to check status for the current orders being executed, raw material entered in vicinity<br/>
          of the company is digitalized

@@ -1,90 +1,73 @@
-import React, { useState } from "react";
+import React, { useState ,useReducer} from "react";
 
 export default function PartListComp() {
-  const [partData, setPartData] = useState([]);
-  const [partName, setPartName] = useState("");
-  const [description, setDescription] = useState("");
+  const initialState={
+    part_name:"",
+    part_description:""  
+  }
 
-  const handlePartNameChange = (event) => {
-    setPartName(event.target.value);
-  };
+const reducer = (state, action) => {
+  switch(action.type) {
+       case 'update':
+          return {...state, [action.fld]:action.val }
+       case 'reset':
+          return initialState
+  }
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+}
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newPart = { partName, description };
-    setPartData([...partData, newPart]);
-    setPartName("");
-    setDescription("");
-  };
+const[formData, dispatch] = useReducer(reducer , initialState );
+
+const sendData = (e) => {
+  e.preventDefault();
+
+  const reqOption = {
+   method:'POST',
+   headers:{'content-type':'application/json'},
+   body: JSON.stringify(formData)
+  }
+
+  fetch("http://localhost:8080/savePart",reqOption)
+  .then(resp => {if(resp.ok)
+   return resp.text();
+  else
+   throw new Error("server error");
+  })
+  .then(text => text.length ? JSON.parse(text) : {})
+  .catch((Error)=>alert("server error . try again later")) 
+  console.log(formData) 
+}
 
   return (
     <div>
       <h1>Part Details</h1>
       <div className="mb-2">
         <div className="form-row">
-          <label htmlFor="cname">Part name:</label>
-          <input
-            type="text"
-            name="company"
-            className="form-control"
-            id="cname"
-            value={partName}
-            onChange={handlePartNameChange}
-          />
+          <label htmlFor="part_name">Part name:</label>
+          <input type="text" name="part_name" className="form-control" id="part_name" value={formData.part_name}
+          onChange={(e)=>{dispatch({type:'update',fld:'part_name',val:e.target.value})}} required />
+                 
         </div>
+
         <div className="mb-2">
-          <label htmlFor="pname">Description:</label>
+          <label htmlFor="part_description">Description:</label>
           <input
-            type="text"
-            name="pname"
+            type="textarea"
+            name="part_description"
             className="form-control"
-            id="pname"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
+            id="part_description"
+            value={formData.part_description}
+                    onChange={(e)=>{dispatch({type:'update',fld:'part_description',val:e.target.value})}} required />
+         
         </div>
       </div>
 
-      <button type="submit" className="btn btn-primary btn-sm" onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className="submit-button-container">
+            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button>
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
+          </div>
 
-      <button
-        type="reset"
-        className="btn btn-primary btn-sm"
-        onClick={() => {
-          setPartName("");
-          setDescription("");
-        }}
-      >
-        Clear
-      </button>
-
-      {partData.length > 0 && (
-        <div>
-          <h2>Entered Part Data</h2>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Part Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {partData.map((part, index) => (
-                <tr key={index}>
-                  <td>{part.partName}</td>
-                  <td>{part.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+<p>{JSON.stringify(formData)}</p>
     </div>
   );
 }

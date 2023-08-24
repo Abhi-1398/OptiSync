@@ -1,90 +1,74 @@
-import React, { useState } from "react";
+import React, { useState ,useReducer } from "react";
 
 export default function RawMaterialListComp() {
-  const [rawMaterialData, setRawMaterialData] = useState([]);
-  const [rawmaterialName, setRawmaterialName] = useState("");
-  const [description, setDescription] = useState("");
+  const initialState={
+    name:"",
+    description:""  
+  }
 
-  const handleRawMaterialNameChange = (event) => {
-    setRawmaterialName(event.target.value);
-  };
+const reducer = (state, action) => {
+  switch(action.type) {
+       case 'update':
+          return {...state, [action.fld]:action.val }
+       case 'reset':
+          return initialState
+  }
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+}
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newRawMaterial = { rawmaterialName, description };
-    setRawMaterialData([...rawMaterialData, newRawMaterial]);
-    setRawmaterialName("");
-    setDescription("");
-  };
+const[formData, dispatch] = useReducer(reducer , initialState );
+
+const sendData = (e) => {
+  e.preventDefault();
+
+  const reqOption = {
+   method:'POST',
+   headers:{'content-type':'application/json'},
+   body: JSON.stringify(formData)
+  }
+
+  fetch("http://localhost:8080/saverawmaterial",reqOption)
+  .then(resp => {if(resp.ok)
+   return resp.text();
+  else
+   throw new Error("server error");
+  })
+  .then(text => text.length ? JSON.parse(text) : {})
+  .catch((Error)=>alert("server error . try again later")) 
+  console.log(formData) 
+}
 
   return (
     <div>
-      <h1>Rawmaterial Details</h1>
+      <h1>RawMaterial Details</h1>
       <div className="mb-2">
         <div className="form-row">
-          <label htmlFor="rawmaterialName">Rawmaterial name:</label>
-          <input
-            type="text"
-            name="rawmaterialName"
-            className="form-control"
-            id="rawmaterialName"
-            value={rawmaterialName}
-            onChange={handleRawMaterialNameChange}
-          />
+          <label htmlFor="name">RawMaterial name:</label>
+          <input type="text" name="name" className="form-control" id="name" value={formData.name}
+          onChange={(e)=>{dispatch({type:'update',fld:'name',val:e.target.value})}} required />
+                 
         </div>
+
         <div className="mb-2">
           <label htmlFor="description">Description:</label>
           <input
-            type="text"
+            type="textarea"
             name="description"
             className="form-control"
             id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
+            value={formData.description}
+                    onChange={(e)=>{dispatch({type:'update',fld:'description',val:e.target.value})}} required />
+         
         </div>
       </div>
 
-      <button type="submit" className="btn btn-primary btn-sm" onClick={handleSubmit}>
-        Submit
-      </button>
+      <div className="submit-button-container">
+            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button>
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
+          </div>
 
-      <button
-        type="reset"
-        className="btn btn-primary btn-sm"
-        onClick={() => {
-          setRawmaterialName("");
-          setDescription("");
-        }}
-      >
-        Clear
-      </button>
-
-      {rawMaterialData.length > 0 && (
-        <div>
-          <h2>Entered Rawmaterial Data</h2>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Rawmaterial Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rawMaterialData.map((rawmaterial, index) => (
-                <tr key={index}>
-                  <td>{rawmaterial.rawmaterialName}</td>
-                  <td>{rawmaterial.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+<p>{JSON.stringify(formData)}</p>
     </div>
+
   );
 }

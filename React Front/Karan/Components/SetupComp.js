@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter, Form, Route ,Routes ,Link } from "react-router-dom";
+import { Route ,Routes ,Link } from "react-router-dom";
 import ProductListComp from "./ProductListComp";
 import PartListComp from "./PartListComp";
 import RawMaterialListComp from "./RawMaterialListComp";
 import MachineListComp from "./MachineListCom";
 import VendorComp from "./VendorComp";
+import CpmComp from "./CpmComp";
 
 
 function SetupComp(){
@@ -44,7 +45,7 @@ function SetupComp(){
             <Link to="/vendors" className="nav-link px-3">Vendors</Link>
           </li>
           <li className="nav-item">
-            <Link to="cpm" className="nav-link px-3">CPM</Link>
+            <Link to="/cpm" className="nav-link px-3">CPM</Link>
           </li>
                </ul>
               </div>
@@ -55,6 +56,7 @@ function SetupComp(){
                     <Route path="rawmateriallist" element={<RawMaterialListComp/>}/>
                     <Route path="machinelist" element={<MachineListComp/>}/>
                     <Route path="vendors" element={<VendorComp/>}/>
+                    <Route path="cpm" element={<CpmComp/>}/>
                   </Routes>
                   
                   </div> 

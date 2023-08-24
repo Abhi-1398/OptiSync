@@ -1,68 +1,121 @@
-import React from "react";
+
+import React ,{ useState ,useReducer, useEffect } from "react";
 
 
 
 export default function VendorComp(){
-    return(
-        <div class container>
-        <div class= 'row'>
-            <div class="col-md-4 ">
-            <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
-              
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#leftNavbar"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-        
-              
-              <div className="collapse navbar-collapse" id="leftNavbar">
-                <ul className="navbar-nav flex-column">
-                
-                  <li className="nav-item">
-                    <a className="nav-link" href="neworder">
-                    Parts List
-                    </a>
-                  </li>
-        
-                
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">
-                      Machine List
-                    </a>
-                  </li>
-        
-                
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">
-                   Operator List
-                    </a>
-                  </li>
-        
-            
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">
-                     Daily Task
-                    </a>
-                  </li>
-        
-                  {/* Quality Link */}
-                  <li className="nav-item">
-                    <a className="nav-link" href="#">
-                      Forword Parts to Assembly
-                    </a>
-                  </li>
-        
-               </ul>
-              </div>
 
-        </nav>
-            </div>
-        </div>
-        </div>
-        
+  const initialState={
+    master_vendor_name:"",
+    master_vendor_part_name:""  
+  }
+
+const reducer = (state, action) => {
+  switch(action.type) {
+       case 'update':
+          return {...state, [action.fld]:action.val }
+       case 'reset':
+          return initialState
+  }
+
+}
+
+const[formData, dispatch] = useReducer(reducer , initialState );
+const [vendorData, setVendor] = useState([]);
+
+useEffect(()=>{
+  fetch(`http://localhost:8080/allVendors`)
+    .then(response => response.json())
+    .then(vendorData => setVendor(vendorData));
+    console.log(vendorData) 
+},[]);
+
+
+const sendData = (e) => {
+  e.preventDefault();
+
+  const reqOption = {
+   method:'POST',
+   headers:{'content-type':'application/json'},
+   
+   body: JSON.stringify(formData)
+  }
+
+  fetch("http://localhost:8080/saveVendor",reqOption)
+  .then(resp => {if(resp.ok)
+   return resp.text();
+  else
+   throw new Error("server error");
+  })
+  .then(text => text.length ? JSON.parse(text) : {})
+  .catch((Error)=>alert("server error . try again later")) 
+  console.log(formData) 
+}
+
+    return(
+
+      <div className="center-content">
+      <h2>Vendor Details</h2>
+      <div className="form-container">
+        <form >
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <label htmlFor="master_vendor_name" className="form-label" >Vendor Name:</label>
+                </td>
+                <td>
+                <select>
+                    <option value="someOption">Some option</option>
+                    <option value="otherOption">Other option</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+              <td>
+              <label htmlFor="master_vendor_part_name" className="form-label" >Vendor PartName:</label>
+                </td>
+                <td>
+                <select>
+                    <option value="someOption">Some option</option>
+                    <option value="otherOption">Other option</option>
+                    </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+
+      <div className="submit-button-container">
+            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button>
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
+          </div>
+
+    </div>
+    
+    
+    //     <div>
+    //     <form> 
+    //       <h1>Machine Details</h1>
+    //   <div className="mb-2">
+    //     <div className="form-row">
+    //       <label htmlFor="machine_name">Vendor name:</label>
+    //       <select>
+    //                 <option value="someOption">Some option</option>
+    //                 <option value="otherOption">Other option</option>
+    //       </select>
+    //   </div>
+      
+    //       <label htmlFor="machine_Decription">vendor Partname:</label>
+    //       <select>
+    //                 <option value="someOption">Some option</option>
+    //                 <option value="otherOption">Other option</option>
+    //       </select>
+      
+    //   </div>
+    //   </form> 
+    // </div>        
     )
 }
