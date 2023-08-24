@@ -25,7 +25,8 @@ public class OrderService {
 		return orderrepo.findById(id).get();
 	}
 	
-	public Object getStatusOrder(int order_id){
-		return orderrepo.getStatusOrder(order_id);
+	public List<Object[]> getStatus(Integer orderId){
+
+		return orderrepo.getQuantitiesByOrderId(orderId);
 	}
 }
