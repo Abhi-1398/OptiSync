@@ -18,7 +18,6 @@ import com.example.demo.services.RolesService;
 public class RolesController {
 
 	@Autowired
-	
 	RolesService rservice;
 	
 	@GetMapping("/allRoles")
@@ -30,6 +29,6 @@ public class RolesController {
 	@PostMapping("/saveRole")
 	public Roles saveRole(@RequestBody Roles rt)
 	{
-		return rservice.saveRoles(rt);
+		return rservice.saveRole(rt);
 	}
 }

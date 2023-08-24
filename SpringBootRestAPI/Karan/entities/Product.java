@@ -34,6 +34,17 @@ public class Product {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Product(String product_name, String product_description, Company company_id) {
+		super();
+		this.product_name = product_name;
+		this.product_description = product_description;
+		this.company_id = company_id;
+	}
+
+
 
 	public Product(int product_id, String product_name, String product_description, Company company_id) {
 		super();

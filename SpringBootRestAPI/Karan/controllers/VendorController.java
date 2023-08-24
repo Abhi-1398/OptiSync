@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,23 +14,23 @@ import com.example.demo.entities.Vendor;
 import com.example.demo.services.VendorService;
 
 
-//@RestController
-//@CrossOrigin(origins="http://localhost:3000")
-//public class VendorController {
-//
-//	
-//	@Autowired
-//	VendorService vservice;
-//	
-//	@GetMapping("/allVendors")
-//	public List<Vendor> getAll()
-//	{
-//		return vservice.getAll();
-//	}
-//    
-//	@PostMapping("/saveVendor")
-//	public Vendor saveVendor(@RequestBody Vendor ve)
-//	{
-//		return vservice.saveVendor(ve);
-//	}
-//}
+@RestController
+@CrossOrigin(origins="http://localhost:3000")
+public class VendorController {
+
+	
+	@Autowired
+	VendorService vservice;
+	
+	@GetMapping("/allVendors")
+	public List<Vendor> getAll()
+	{
+		return vservice.getall();
+	}
+    
+	@PostMapping("/saveVendor")
+	public Vendor saveVendor(@RequestBody Vendor ve)
+	{
+		return vservice.saveVendor(ve);
+	}
+}

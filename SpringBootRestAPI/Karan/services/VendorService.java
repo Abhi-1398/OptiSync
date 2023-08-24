@@ -20,7 +20,7 @@ public class VendorService {
 	    	return vrepo.findAll();
 	    }
 	    
-	    public Vendor saveProduct(@RequestBody Vendor v)
+	    public Vendor saveVendor(@RequestBody Vendor v)
 	    {
 	    	return vrepo.save(v);
 	    }

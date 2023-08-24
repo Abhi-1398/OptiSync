@@ -24,6 +24,16 @@ public class Vendor {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Vendor(String master_vendor_name, String master_vendor_part_name) {
+		super();
+		this.master_vendor_name = master_vendor_name;
+		this.master_vendor_part_name = master_vendor_part_name;
+	}
+
+
 
 	public Vendor(int master_vendor_id, String master_vendor_name, String master_vendor_part_name) {
 		super();
