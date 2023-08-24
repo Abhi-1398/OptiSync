@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.example.demo.services.CompanyService;
 import com.example.demo.services.OrderService;
 import com.example.demo.services.ProductService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class OrderController {
 
@@ -42,7 +44,7 @@ public class OrderController {
 	
 	@PostMapping("/saveOrder")
 	public Orders saveOrder(@RequestBody NewOrder order) {
-			
+			System.out.println(order.toString());
 		Client clientId= clientservice.getByID(order.getClientId());
 		Company companyId = companyservice.getById(order.getCompanyId());
 		Product productId = productservice.getbyid(order.getProductId());
@@ -54,15 +56,16 @@ public class OrderController {
 		Orders o = new Orders(clientId, companyId, productId, productQty ,startDate, endDate, dispatchQty);
 		return orderservice.saveOrder(o);
 	}
+		
+	@GetMapping("/getOrderById")
+	public Orders getOrder(@RequestParam("order_id") int orderId){
+		return orderservice.getbyid(orderId);
+	}
 	
 	@GetMapping("/getStatus")
-	public Object getStatusOrder(@RequestParam int order_id) {
-		return orderservice.getStatusOrder(order_id);
+	public List<Object[]> getStatus(@RequestParam("orderId") Integer orderId) {
+
+		return orderservice.getStatus(orderId);
 	}
 	
-	
-	@GetMapping("/getOrderById")
-	public Orders getOrder(@RequestParam int order_id){
-		return orderservice.getbyid(order_id);
-	}
 }

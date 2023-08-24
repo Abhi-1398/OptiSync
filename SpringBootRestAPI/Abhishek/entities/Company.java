@@ -1,16 +1,14 @@
 package com.example.demo.entities;
 
 import java.sql.Timestamp;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,9 +29,9 @@ public class Company {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	Timestamp registration_date;
 	
-	 @ManyToOne
+	 @OneToOne
 	 @JoinColumn(name = "plan_id")
-	 Plan plans;
+	 Plan plan_id;
 
 	@Column
 	boolean payment_status;
@@ -60,7 +58,7 @@ public class Company {
 		this.contact_no = contact_no;
 		this.email = email;
 		this.registration_date = registration_date;
-		this.plans = plans;
+		this.plan_id = plans;
 		this.payment_status = payment_status;
 		this.plan_startdate = plan_startdate;
 		this.plan_enddate = plan_enddate;
@@ -77,7 +75,7 @@ public class Company {
 		this.contact_no = contact_no;
 		this.email = email;
 		this.registration_date = registration_date;
-		this.plans = plans;
+		this.plan_id = plans;
 		this.payment_status = payment_status;
 		this.plan_startdate = plan_startdate;
 		this.plan_enddate = plan_enddate;
@@ -121,10 +119,10 @@ public class Company {
 		this.registration_date = registration_date;
 	}
 	public Plan getPlans() {
-		return plans;
+		return plan_id;
 	}
 	public void setPlans(Plan plans) {
-		this.plans = plans;
+		this.plan_id = plans;
 	}
 	public boolean isPayment_status() {
 		return payment_status;

@@ -67,4 +67,11 @@ public class NewOrder {
 		public void setDispatchQty(int dispatchQty) {
 			this.dispatchQty = dispatchQty;
 		}
+		@Override
+		public String toString() {
+			return "NewOrder [clientId=" + clientId + ", companyId=" + companyId + ", productId=" + productId
+					+ ", productQty=" + productQty + ", startDate=" + startDate + ", endDate=" + endDate
+					+ ", dispatchQty=" + dispatchQty + "]";
+		}
+		
 }
