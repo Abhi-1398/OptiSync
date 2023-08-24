@@ -1,14 +1,20 @@
-import logo from './logo.svg';
+
 import './App.css';
-import HelloCls from './Components/HelloCls';
-import HelloFun from './Components/HelloFun';
-import ComplexComp from './Components/ComplexCom';
 import { BrowserRouter, Link, Route, Router, Routes } from 'react-router-dom';
 import LoginComp from './Components/LoginComp';
 import RegistrationComp from './Components/RegistrationComp';
 import'bootstrap/dist/css/bootstrap.min.css';
 import HomeComp from './Components/HomeComp'
-import Manager from './Components/ManagerComp';
+
+import ManagerComp from './Components/ManagerComp';
+import ProductionComp from './Components/ProductionComp';
+import SetupComp from './Components/SetupComp';
+import ProductListComp from './Components/ProductListComp';
+import PartListComp from './Components/PartListComp';
+import RawMaterialListComp from './Components/RawMaterialListComp';
+import MachineListComp from './Components/MachineListCom';
+import VendorComp from './Components/VendorComp';
+import CpmComp from './Components/CpmComp';
 
 function App() {
   return (
@@ -38,6 +44,16 @@ function App() {
           <li className="nav-item">
             <Link to="about us" className="nav-link px-3">About us</Link>
           </li>
+          <li className="nav-item">
+            <Link to="manager" className="nav-link px-3">Manager</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="production" className="nav-link px-3">Production</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="setup" className="nav-link px-3">Setup</Link>
+          </li>
+          
           
           </li>
 
@@ -49,7 +65,17 @@ function App() {
         <Route path='/' element={<HomeComp/>}/>
         <Route path='login' element={<LoginComp/>}/>
         <Route path='register' element={<RegistrationComp/>}/>
-
+        <Route path='manager' element={<ManagerComp/>}/>
+        <Route path='production' element={<ProductionComp/>}/>
+        <Route path='setup' element={<SetupComp/>}/>
+        <Route path='Product' element={<ProductListComp/>}/>
+        <Route path='productlist' element={<ProductListComp/>}/>
+        <Route path='partlist' element={<PartListComp/>}/>
+        <Route path='rawmateriallist' element={<RawMaterialListComp/>}/>
+        <Route path='machinelist' element={<MachineListComp/>}/>
+        <Route path='vendors' element={<VendorComp/>}/>
+        <Route path='cpm' element={<CpmComp/>}/>
+       
       </Routes>
 
       
@@ -63,20 +89,7 @@ function App() {
       Optisync Copyright © 2023. All rights reserved.
     </div>
     
-    <div>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="#!" class="text-white me-4">
-        <i class="fab fa-google"></i>
-      </a>
-      <a href="#!" class="text-white">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-    </div>
+   
    
   </div>
       
