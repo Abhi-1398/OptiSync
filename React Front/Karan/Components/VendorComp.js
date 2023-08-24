@@ -65,9 +65,15 @@ const sendData = (e) => {
                   <label htmlFor="master_vendor_name" className="form-label" >Vendor Name:</label>
                 </td>
                 <td>
-                <select>
-                    <option value="someOption">Some option</option>
-                    <option value="otherOption">Other option</option>
+                <select name="master_vendor_name" className="form-select" id="master_vendor_name"
+                onChange={(e)=>{dispatch({type:'update',fld:'master_vendor_name',val:e.target.value})}}>
+                    <option value="option selected">Vendor option</option>
+                    {
+                         vendorData.map(v => {
+                             return (<option key={v.master_vendor_name} value={v.master_vendor_name} > {v.master_vendor_name} </option>
+                             );
+                         })
+                     }
                     </select>
                 </td>
               </tr>
@@ -76,9 +82,16 @@ const sendData = (e) => {
               <label htmlFor="master_vendor_part_name" className="form-label" >Vendor PartName:</label>
                 </td>
                 <td>
-                <select>
-                    <option value="someOption">Some option</option>
-                    <option value="otherOption">Other option</option>
+                <select name="master_vendor_part_name" className="form-select" id="master_vendor_part_name"
+                onChange={(e)=>{dispatch({type:'update',fld:'master_vendor_part_name',val:e.target.value})}}>
+                    
+                    <option value="option selected">Vendor Part</option>
+                    {
+                         vendorData.map(v => {
+                             return (<option key={v.master_vendor_part_name} value={v.master_vendor_part_name} > {v.master_vendor_part_name} </option>
+                             );
+                         })
+                     }
                     </select>
                 </td>
               </tr>
