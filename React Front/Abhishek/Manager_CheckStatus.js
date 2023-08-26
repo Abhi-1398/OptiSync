@@ -7,8 +7,7 @@ export default function Checkstatus(){
     const [orderId, setOrderId] = useState('');
 
     const getOrderStatusDetails = ()=>{
-        alert(orderId)
-        fetch(`http://localhost:9000/getStatus?orderId=${orderId}`)
+       fetch(`http://localhost:9000/getStatus?orderId=${orderId}`)
       .then(response => response.json())
       .then(statusData => setStatus(statusData));
       console.log(statusData) 

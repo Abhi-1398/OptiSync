@@ -3,12 +3,17 @@ import "./MNewOrder.css"; // Make sure to import the CSS file for styling
 import { useNavigate } from "react-router-dom";
 
 export default function OrderRawMaterial() {
+
+  const id = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_id;
+
   const initialState={
-    OrderId: 0,
-    rawMaterailId: 0,
-    RawMaterialQty: 0,
+    //OrderId: 0,
+    company_id:id,
+    raw_material_id:0,
+    raw_material_qty:0,
+    stock_date:new Date().toJSON().slice(0,10)
    }
-  //needed by useReducer - 
+
   const reducer = (state, action) => {
     switch(action.type) {
          case 'update':
@@ -27,11 +32,16 @@ export default function OrderRawMaterial() {
      body: JSON.stringify(formData)
     }
 
-    fetch("http://localhost:8080/saveOrder",reqOption)
-    .then(resp => {if(resp.ok)
+    fetch("http://localhost:8080/saveRawOnlyMaterialInStock",reqOption)
+    .then(resp => {if(resp.ok){
+      alert("insertion successfull");
      return resp.text();
+    }
     else
+    {
+      console.log(formData) 
      throw new Error("server error");
+    }
     })
     .then(text => text.length ? JSON.parse(text) : {})
     .catch((Error)=>alert("server error . try again later")) 
@@ -40,14 +50,14 @@ export default function OrderRawMaterial() {
 
 const[formData, dispatch] = useReducer(reducer , initialState );
 
-const[order,setOrder] = useState([]);
+//const[order,setOrder] = useState([]);
 
-useEffect(()=>{
-    fetch(`http://localhost:8080/getAllOrders`)
-      .then(response => response.json())
-      .then(orderdata => setOrder(orderdata));
-      console.log(order)      
-},[]);
+// useEffect(()=>{
+//     fetch(`http://localhost:8080/getAllOrders`)
+//       .then(response => response.json())
+//       .then(orderdata => setOrder(orderdata));
+//       console.log(order)      
+// },[]);
 
 //to retrive Product details
 const [RawMaterial, setRawMaterial] = useState([]);
@@ -68,13 +78,13 @@ const handleGoBack=() =>{
         <form >
           <table>
             <tbody>
-              <tr>
+              {/* <tr>
                 <td>
                   <label htmlFor="OrderId" className="form-label" >OrderId :</label>
                 </td>
                 <td>
                 <select name="OrderId" className="form-select" id="OrderId"
-                onChange={(e)=>{dispatch({type:'update',fld:'OrderId',val:e.target.value})}}  >
+                onChange={(e)=>{dispatch({type:'update',fld:'OrderId',val:e.target.value})}}>
                       <option selected>Select Order</option>
                      {
                          order.map(v => {
@@ -84,14 +94,14 @@ const handleGoBack=() =>{
                      }
                 </select>
                 </td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>
-                  <label htmlFor="rawMaterailId" className="form-label" >RawMaterial ID:</label>
+                  <label htmlFor="raw_material_id" className="form-label" >RawMaterial name:</label>
                 </td>
                 <td>
-                <select name="rawMaterailId" className="form-select" id="rawMaterailId"
-                onChange={(e)=>{dispatch({type:'update',fld:'rawMaterailId',val:e.target.value})}}  >
+                <select name="raw_material_id" className="form-select" id="raw_material_id"
+                onChange={(e)=>{dispatch({type:'update',fld:'raw_material_id',val:e.target.value})}}  >
                       <option selected>Select RawMaterial</option>
                      {
                          RawMaterial.map(z => {
@@ -102,11 +112,11 @@ const handleGoBack=() =>{
                 </select>                  
                 </td>
                 <td>
-                  <label htmlFor="RawMaterialQty" className="form-label" >RawMaterial Quantity:</label>
+                  <label htmlFor="raw_material_qty" className="form-label" >RawMaterial Quantity:</label>
                 </td>
                 <td>
-                  <input type="number" id="RawMaterialQty" name="RawMaterialQty" value={formData.RawMaterialQty}
-                    onChange={(e)=>{dispatch({type:'update',fld:'RawMaterialQty',val:e.target.value})}} required />
+                  <input type="number" id="raw_material_qty" name="raw_material_qty" value={formData.raw_material_qty}
+                    onChange={(e)=>{dispatch({type:'update',fld:'raw_material_qty',val:e.target.value})}} required />
                 </td>
               </tr>
               <tr>

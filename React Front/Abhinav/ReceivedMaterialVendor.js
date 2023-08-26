@@ -2,10 +2,14 @@ import React, { useState ,useReducer, useEffect } from "react";
 import "./MNewOrder.css"; // Make sure to import the CSS file for styling
 import { useNavigate } from "react-router-dom";
 
+const id = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_id;
+
 export default function ReceivedMaterialVendor() {
   const initialState={
-    PartName: "",
-    PartQty: 0,
+    company_id:id,
+    part_id: 0,
+    part_qty: 0,
+    stock_date:new Date().toJSON().slice(0,10)
    }
   //needed by useReducer - 
   const reducer = (state, action) => {
@@ -26,9 +30,11 @@ export default function ReceivedMaterialVendor() {
      body: JSON.stringify(formData)
     }
 
-    fetch("http://localhost:8080/savePart",reqOption)
-    .then(resp => {if(resp.ok)
+    fetch("http://localhost:8080/savePartInStock",reqOption)
+    .then(resp => {if(resp.ok){
+      alert("insertion successfull");
      return resp.text();
+    }
     else
      throw new Error("server error");
     })
@@ -62,11 +68,11 @@ const handleGoBack=() =>{
             <tbody>
               <tr>
                 <td>
-                  <label htmlFor="PartName" className="form-label" >PartName:</label>
+                  <label htmlFor="part_id" className="form-label" >PartName:</label>
                 </td>
                 <td>
-                <select name="PartName" className="form-select" id="PartName"
-                onChange={(e)=>{dispatch({type:'update',fld:'PartName',val:e.target.value})}}  >
+                <select name="part_id" className="form-select" id="part_id"
+                onChange={(e)=>{dispatch({type:'update',fld:'part_id',val:e.target.value})}}  >
                       <option selected>Select Part</option>
                      {
                          part.map(v => {
@@ -80,11 +86,11 @@ const handleGoBack=() =>{
 
               <tr>
                   <td>
-                    <label htmlFor="PartQty" className="form-label" >Part Quantity:</label>
+                    <label htmlFor="part_qty" className="form-label" >Part Quantity:</label>
                   </td>
                 <td>
-                  <input type="number" id="PartQty" name="PartQty" value={formData.productQty}
-                    onChange={(e)=>{dispatch({type:'update',fld:'PartQty',val:e.target.value})}} required />
+                  <input type="number" id="part_qty" name="part_qty" value={formData.part_qty}
+                    onChange={(e)=>{dispatch({type:'update',fld:'part_qty',val:e.target.value})}} required />
                 </td>
               </tr>
             </tbody>

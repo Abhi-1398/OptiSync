@@ -5,25 +5,27 @@ import { Route, Routes , Link } from 'react-router-dom';
 
 function StoreComp(){
 
-const [data,setData]=useState(null);
+  const name = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_name;
 
-    useEffect(()=>{
-        const loginId = JSON.parse(localStorage.getItem("loggedUser")).login_id;
+//const [data,setData]=useState(null);
 
-        fetch("http://localhost:8080/getObject?login_id="+loginId)
-        .then(resp=>resp.json())
-        .then(obj => {
-            localStorage.setItem("loggedStore",JSON.stringify(obj))
-            setData(obj)
-        })
+    // useEffect(()=>{
+    //     const loginId = JSON.parse(localStorage.getItem("loggedUser")).login_id;
 
-    },[])
+    //     fetch("http://localhost:8080/getObject?login_id="+loginId)
+    //     .then(resp=>resp.json())
+    //     .then(obj => {
+    //         localStorage.setItem("loggedStore",JSON.stringify(obj))
+    //         setData(obj)
+    //     })
+
+    // },[])
     return(
 
         
         
             <div class="col-md-4">
-              <h5 style={{backgroundColor:"green"}}>Company: {data && data.company_id.company_name}</h5>
+              <h5 style={{backgroundColor:"green"}}>Company: {name}</h5>
             <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
               
               <button
