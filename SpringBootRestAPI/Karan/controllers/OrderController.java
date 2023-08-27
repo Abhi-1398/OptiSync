@@ -1,0 +1,87 @@
+
+package com.example.demo.controllers;
+
+import java.sql.Timestamp;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entities.Client;
+import com.example.demo.entities.Company;
+import com.example.demo.entities.NewOrder;
+import com.example.demo.entities.Orders;
+import com.example.demo.entities.Product;
+import com.example.demo.service.*;
+import com.example.demo.services.ClientService;
+import com.example.demo.services.CompanyService;
+import com.example.demo.services.OrderService;
+import com.example.demo.services.ProductService;
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+public class OrderController {
+
+	@Autowired
+	OrderService orderservice;
+	
+	@Autowired
+	ClientService clientservice;
+	
+	@Autowired
+	CompanyService companyservice;
+	
+	@Autowired
+	ProductService productservice;
+	
+	@GetMapping("/getOrders")
+	public List<Orders> getall(){
+		return orderservice.getall();
+	}
+	
+	@PostMapping("/saveOrder")
+	public Orders saveOrders(@RequestBody NewOrder order) {
+			System.out.println(order.toString());
+		Client clientId= clientservice.getbyid(order.getClientId());
+		Company companyId = companyservice.getbyid(order.getCompanyId());
+		Product productId = productservice.getbyid(order.getProductId());
+		int productQty = order.getProductQty();
+		Timestamp startDate = order.getStartDate();
+		Timestamp endDate = order.getEndDate() ; 
+		int dispatchQty = 0;
+		
+		Orders o = new Orders(clientId, companyId, productId, productQty ,startDate, endDate, dispatchQty);
+		return orderservice.saveOrder(o);
+	}
+		
+	@GetMapping("/getOrderById")
+	public Orders getOrder(@RequestParam("order_id") int orderId){
+		return orderservice.getbyid(orderId);
+	}
+	
+	@GetMapping("/getStatus")
+	public List<Object[]> getStatus(@RequestParam("orderId") int orderId) {
+
+		return orderservice.getStatus(orderId);
+	}
+	
+	@PutMapping("/updateDispatchQty/{qtyId}/{orderId}/{companyId}")
+	public int updateDispatchQty(@PathVariable("qtyId") int qty,@PathVariable("orderId") int orderId,@PathVariable("companyId") int companyId) {	    
+		return orderservice.updateDispatchQty(qty,orderId,companyId);
+		//int qty, int orderId, int companyId
+	}
+	
+	@GetMapping("/getordersbyid")
+	public List<Orders> getordersbycid(@RequestParam int id)
+	{
+		return orderservice.getordersbycid(id);
+	}
+}
