@@ -1,0 +1,36 @@
+package com.example.demo.service;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.example.demo.entities.Orders;
+import com.example.demo.repository.OrderRepository;
+
+@Service
+public class OrderService {
+
+	@Autowired
+	OrderRepository orderrepo;
+	
+	public List<Orders> getall(){
+		return orderrepo.findAll();
+	}
+	
+	public Orders saveOrder(@RequestBody Orders o) {
+		return orderrepo.save(o);
+	}
+	
+	public int updateDispatchQty(int qty, int orderId, int companyId) {
+		return orderrepo.updateDispatchQty(qty, orderId ,companyId);
+	}
+	
+	public Orders getbyid(int id) {
+		return orderrepo.findById(id).get();
+	}
+	
+	public List<Object[]> getStatus(Integer orderId){
+
+		return orderrepo.getQuantitiesByOrderId(orderId);
+	}
+}

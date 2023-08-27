@@ -1,0 +1,26 @@
+package com.example.demo.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.Entity.Production;
+import com.example.demo.Repository.ProductionRepository;
+
+@Service
+public class ProductionService {
+
+	@Autowired
+	ProductionRepository pr;
+	
+	public List<Production> getAll()
+	{
+		return pr.findAll();
+	}
+	
+	public Production saveProduction(Production s)
+	{
+		return pr.save(s);
+	}
+}

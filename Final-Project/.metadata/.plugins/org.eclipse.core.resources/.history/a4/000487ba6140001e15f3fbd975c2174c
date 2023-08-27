@@ -1,0 +1,17 @@
+package com.example.demo.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.entities.Company;
+@Repository
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
+	
+	@Query(value="select * from company u where u.admin_approval=false" ,nativeQuery = true)
+	public List<Company> getpendingrequest();
+	
+
+}

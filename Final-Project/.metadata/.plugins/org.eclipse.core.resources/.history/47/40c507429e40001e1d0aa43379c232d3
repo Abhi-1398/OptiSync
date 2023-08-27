@@ -1,0 +1,24 @@
+package com.example.demo.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.entities.Company;
+
+import jakarta.transaction.Transactional;
+@Repository
+@Transactional
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
+	
+	@Query(value="select * from company u where u.admin_approval=false" ,nativeQuery = true)
+	public List<Company> getpendingrequest();
+	
+	@Modifying
+	@Query(value="update company u set u.admin_approval=true where u.id:id" ,nativeQuery = true)
+	public int changestatus(int id);
+
+}

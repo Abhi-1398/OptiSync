@@ -1,0 +1,21 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.example.demo.entities.Dispatch;
+import com.example.demo.entities.Orders;
+import com.example.demo.repository.*;
+
+@Service
+public class DispatchService {
+
+	@Autowired
+	DispatchRepository dispatchrepo;
+	
+	
+	public Dispatch saveResDisQty(@RequestBody Dispatch o) {
+		return dispatchrepo.save(o);
+	}
+}
