@@ -1,49 +1,46 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.demo.Entity.Login;
-import com.example.demo.Repository.LoginRepository;
+import com.example.demo.entities.Login;
+import com.example.demo.repository.LoginRepository;
 
 @Service
 public class LoginService {
-
+	
 	@Autowired
-	LoginRepository lr;
+	LoginRepository lrep;
 	
-	public Login getLogin(String username,String password)
+	
+	
+	public Login savelogin( Login l)
+	{
+		return lrep.save(l);
+	}
+	
+	public Login getLogin(String id,String password)
 	{
 		Login l;
-		Optional<Login> ol = lr.getLogin(username, password);
+		Optional<Login> ol = lrep.getLogin(id,password);
 		try
 		{
-			l=ol.get();
+			l = ol.get();
 		}
 		catch(Exception e)
 		{
-			l=null;
+			l = null;
 		}
 		return l;
 	}
 	
-	public Login getLoginObject(int login_id)
+	public List<Login> getloginsbyid(int id)
 	{
-		Login l;
-		Optional<Login> ol = lr.findById(login_id);
-		
-		try
-		{
-			l=ol.get();
-		}
-		catch(Exception e)
-		{
-			l=null;
-		}
-		return l;
+	    return lrep.getloginsbyid(id);
 	}
-	
-	
+
 }

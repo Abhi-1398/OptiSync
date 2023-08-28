@@ -1,19 +1,35 @@
-package com.example.demo.Service;
+package com.example.demo.service;
+
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.demo.Entity.Machine;
-import com.example.demo.Repository.MachineRepository;
+import com.example.demo.entities.Machine;
+
+import com.example.demo.repository.MachineRepository;
+
 
 @Service
 public class MachineService {
 
 	@Autowired
-	MachineRepository mr;
+	MachineRepository mcrepo;
 	
-	public Machine getById(int id)
-	{
-		return mr.findById(id).get();
-	}
+	 public List<Machine> getall()
+	    {
+	    	return mcrepo.findAll();
+	    }
+	    
+	    public Machine saveMachine(@RequestBody Machine m)
+	    {
+	    	return mcrepo.save(m);
+	    }
+	    
+	    public Machine getbyid(int id)
+	    {
+	    	return mcrepo.findById(id).get();
+	    }
 }

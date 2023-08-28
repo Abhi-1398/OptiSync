@@ -1,10 +1,10 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Entity.Assembly;
-import com.example.demo.Repository.AssemblyRepository;
+import com.example.demo.entities.*;
+import com.example.demo.repository.*;
 
 @Service
 public class AssemblyService {

@@ -1,27 +1,36 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.demo.Entity.RawMaterial;
-import com.example.demo.Repository.RawMaterialRepository;
 
+import com.example.demo.entities.RawMaterial;
+
+import com.example.demo.repository.RawMaterialRepository;
 
 @Service
 public class RawMaterialService {
-
+	
 	@Autowired
-	RawMaterialRepository rr;
+	RawMaterialRepository rmrepo;
 	
-	public List<RawMaterial> getAll()
-	{
-		return rr.findAll();
-	}
-	
-	public RawMaterial getById(int id)
-	{
-		return rr.findById(id).get();
-	}
+	 public List<RawMaterial> getall()
+	    {
+	    	return rmrepo.findAll();
+	    }
+	    
+	    public RawMaterial saveRawMaterial(@RequestBody RawMaterial rm)
+	    {
+	    	return rmrepo.save(rm);
+	    }
+	    
+	    public RawMaterial getbyid(int id)
+	    {
+	    	return rmrepo.findById(id).get();
+	    }
+
 }

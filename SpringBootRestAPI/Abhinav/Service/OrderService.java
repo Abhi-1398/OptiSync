@@ -1,28 +1,41 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.Entity.Orders;
-import com.example.demo.Repository.OrderRepository;
-
-
+import org.springframework.web.bind.annotation.RequestBody;
+import com.example.demo.entities.Orders;
+import com.example.demo.repository.OrderRepository;
 
 @Service
 public class OrderService {
-	@Autowired
-	OrderRepository orep;
-	
-	public Orders getbyid(int id)
-	{
-		return orep.findById(id).get();
-	}
-	
-	public List<Orders> getAllOredrs()
-	{
-		return orep.findAll();
-	}
 
+	@Autowired
+	OrderRepository orderrepo;
+	
+	public List<Orders> getall(){
+		return orderrepo.findAll();
+	}
+	
+	public Orders saveOrder(@RequestBody Orders o) {
+		return orderrepo.save(o);
+	}
+	
+	public int updateDispatchQty(int qty, int orderId, int companyId) {
+		return orderrepo.updateDispatchQty(qty, orderId ,companyId);
+	}
+	
+	public Orders getbyid(int id) {
+		return orderrepo.findById(id).get();
+	}
+	
+	public List<Object[]> getStatus(int orderId){
+
+		return orderrepo.getQuantitiesByOrderId(orderId);
+	}
+	
+	public List<Orders> getordersbycid(int id)
+	{
+		return orderrepo.getorderbycid(id);
+	}
 }
