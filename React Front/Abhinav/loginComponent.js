@@ -1,18 +1,24 @@
 import React, { useReducer, useState } from "react"; 
 import Regitrastion from "./RegistrationComponent";
-import { useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./slice";
 import { current } from "@reduxjs/toolkit";
+import ForgetpassComp from "./ForgetpassComp";
 
 
 
 function LoginComponent(){
+    
+    
+    const forget=()=>{
+            navigate("/forgetpass")
+
+    }
 
     const init = {
         username:{value:"",hasError:true,error:"",touched:false},
-        password:{value:"",hasError:true,error:"",touched:false},
-        isFormValid:false
+        password:{value:"",hasError:true,error:"",touched:false}
     }
 
    
@@ -27,7 +33,7 @@ function LoginComponent(){
         }
     }
 
-    const [info,dispatch] = useReducer(reducer,init);
+    const [info,dispatch] = useReducer(reducer,init);   
     const [msg,setMsg]= useState("");
     const reduxDispatch = useDispatch();
 
@@ -58,19 +64,19 @@ function LoginComponent(){
         let error = "";
         switch(name){
             case 'username':
-                var exp = /^[a-z0-9]*$/
+                var exp = /^[A-Z]{1}[a-z]{0,9}\.[a-z]{0,9}$/
                 if(! exp.test(value))
                 {
                     hasError = true;
-                    error = "id should be of length max 10"
+                    error = "Please check provided username "
                 }
                 break;
             case 'password':
-                var exp1 = /^[a-z0-9]*$/
+                var exp1 = /^[A-Z]{1}[a-z]{0,9}\@[a-z]{0,9}$/
                 if(! exp1.test(value))
                 {
                     hasError = true;
-                    error = "Combination of alphabets and integer";
+                    error = "Please check provided password";
                 }
                 break;
 
@@ -78,26 +84,26 @@ function LoginComponent(){
         return {hasError,error}
 
     }
-
+      
     const sendData = (e) => {
-        {/*e.preventDefault();*/}
         const reqOptions = {
             method:'POST',
             headers:{'content-type':'application/json'},
-            body: JSON.stringify({
+            body: JSON.stringify( {
                 username: info.username.value,
                 password: info.password.value
-        })
+                
+            } )
         }
+        
         e.preventDefault();
         fetch("http://localhost:8080/checkLogin",reqOptions)
         .then(resp => {if(resp.ok)
-                            {
-                                return resp.text();
-                            }
+                       return resp.text();
                         else
-                            throw new Error("server error");
-                        })
+                        throw new Error("server Error"); 
+                         //console.log(resp)
+                            })
         .then(text => text.length ? JSON.parse(text) : {})
         .then(obj => {
                         if(Object.keys(obj).length === 0)
@@ -106,49 +112,44 @@ function LoginComponent(){
                         }
                         else
                         {
-                            
+                            console.log(JSON.stringify(obj))
                             reduxDispatch(login());
                             localStorage.setItem("loggedUser",JSON.stringify(obj));
-                            console.log(obj)
-                                if(obj.role.role_id === 1  && obj.setup_status===true )
-                                {
-                                    navigate("/Manager");
-                                }
-                                else if(obj.role.role_id === 1 && obj.setup_status==false)
-                                {
-                                   
-                                    navigate("/");
-                                }
-                                else if(obj.role.role_id === 2)
+                             
+                                if(obj.roles.role_id === 1  )
                                 {
                                     navigate("/Admin");
                                 }
-                                else if(obj.role.role_id === 3)
-                                {                                   
+                                else if(obj.roles.role_id === 2 )
+                                {
+                                    navigate("/Manager");
+                                }
+                                else if(obj.roles.role_id === 3 )
+                                {
                                     navigate("/Store");
                                 }
-                                else if(obj.role.role_id === 4)
+                                else if(obj.roles.role_id === 4)
                                 {
                                     navigate("/Production");
                                 }
-                                else if(obj.role.role_id === 5)
+                                else if(obj.roles.role_id === 5)
                                 {
-                                    navigate("/QualityAssembly");
+                                    navigate("/Assembly");
                                     
                                 }
-                                else if(obj.role.role_id === 6)
+                                else if(obj.roles.role_id === 6)
                                 {
-                                    navigate("/Vendor");
+                                    navigate("/Dispatch");
                                 }
                             
                         }
         })
-        .catch((error) => alert("server error. Try after some time"))
+        .catch((error) => alert("server error. Try after some time")) 
     }
 
     const navigate = useNavigate();
     const navigateToRegistration = ()=>{
-        navigate('/Registration');
+        navigate('/Plan');
     }
     return(
         <div>
@@ -156,7 +157,7 @@ function LoginComponent(){
                 <form className="align-middle  mx-auto col-10 col-md-8 col-lg-6">
                    <table>
                     <tr>
-                        <td><label htmlFor="username" className="form-label">UserName:</label></td>
+                        <td><label htmlFor="username" className="form-label">LoginId:</label></td>
                         <td><input type="text" id="username" name="username" required value={info.username.value}
                         onChange={(e)=>{handleChange("username",e.target.value)}}/></td>
                         <td>
@@ -179,7 +180,12 @@ function LoginComponent(){
                         <td></td>
 
                            <td> <button type="submit" class="btn btn-primary" onClick={(e)=>{sendData(e)}}>Login</button>                   
-                             <a href=""> Forget Password ?</a><br/></td> 
+                            {/*  <a href="/" onClick={forget}> Forget Password ?</a><br/> */}
+                             <Link to="/forgetpass" className="nav-link px-3"> forget password? </Link>
+                             <Routes>
+                             <Route path="forgetpass" element={<ForgetpassComp/>}/>
+                             </Routes>
+                             </td> 
                     </tr>
                     <tr>
                         <td></td>
@@ -188,7 +194,7 @@ function LoginComponent(){
                     </table>
                 </form>
             </div>
-            <p>{JSON.stringify(info)}</p>
+            
             <p>{msg}</p>
         </div> 
     )

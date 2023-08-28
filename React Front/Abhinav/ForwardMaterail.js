@@ -2,7 +2,10 @@ import React, { useState ,useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-const id = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_id;
+const id = JSON.parse(localStorage.getItem("loggedUser")).company_id;
+const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
+
+
 
 export default  function ForwardMaterial()
 {
@@ -27,6 +30,8 @@ export default  function ForwardMaterial()
       
       }
       const[formData, dispatch] = useReducer(reducer , initialState );
+      const [successMessage, setSuccessMessage] = useState("");
+
       const sendData = (e) => {
         e.preventDefault();
     
@@ -38,13 +43,20 @@ export default  function ForwardMaterial()
     
         fetch("http://localhost:8080/saveStore",reqOption)
         .then(resp => {if(resp.ok){
-          alert("forwarded successfully");
+          //alert("forwarded successfully");
          return resp.text();
         }
         else
          throw new Error("server error");
         })
-        .then(text => text.length ? JSON.parse(text) : {})
+        .then((text) => {
+          if (text.length) {
+            // If data submission was successful
+            setSuccessMessage("material Successfully forwarded to selected department");
+          }
+          return text;
+        })
+       // .then(text => text.length ? JSON.parse(text) : {})
         .catch((Error)=>alert("server error . try again later")) 
         console.log(formData) 
     }
@@ -52,7 +64,7 @@ export default  function ForwardMaterial()
     const[part,setPart] = useState([]);
 
 useEffect(()=>{
-    fetch(`http://localhost:8080/getAllParts`)
+    fetch(`http://localhost:8080/getPart`)
       .then(response => response.json())
       .then(partdata => setPart(partdata));
       console.log(part)      
@@ -60,7 +72,7 @@ useEffect(()=>{
 
     const [RawMaterial, setRawMaterial] = useState([]);
 useEffect(()=>{
-  fetch(`http://localhost:8080/getAllMaterial`)
+  fetch(`http://localhost:8080/getrawmaterial`)
   .then(response => response.json())
   .then(RawMaterialData => setRawMaterial(RawMaterialData));
     console.log(RawMaterial) 
@@ -69,7 +81,7 @@ useEffect(()=>{
     const[order,setOrder] = useState([]);
 
 useEffect(()=>{
-    fetch(`http://localhost:8080/getAllOrders`)
+    fetch(`http://localhost:8080/getOrders`)
       .then(response => response.json())
       .then(orderdata => setOrder(orderdata));
       console.log(order)      
@@ -91,7 +103,11 @@ useEffect(()=>{
 
     return(
   <div className="center-content">
+     <h5 style={{backgroundColor:"green"}}>Company: {data}</h5>
       <h2>Forward Material</h2>
+      <h3>{successMessage && (
+          <p style={{ color: "green", fontSize: "20px" }}>{successMessage}</p>
+        )}</h3>
       <div className="form-container">
         <form >
           <table>
@@ -123,7 +139,7 @@ useEffect(()=>{
                       <option selected>Select Departmant</option>
                      {
                          forward.map(v => {
-                             return (<option key={v.forward_id} value={v.forward_id} > {v.name} </option>
+                             return (<option key={v.forward_id} value={v.forward_id} > {v.forward_name} </option>
                              );
                          })
                      }
@@ -180,7 +196,7 @@ useEffect(()=>{
           </div>
         </form>
       </div>
-      <p>{JSON.stringify(formData)}</p>
+      {/*<p>{JSON.stringify(formData)}</p> */}
      
         </div>
     )

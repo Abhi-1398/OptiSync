@@ -2,9 +2,14 @@ import React, { useState ,useReducer, useEffect } from "react";
 import "./MNewOrder.css"; // Make sure to import the CSS file for styling
 import { useNavigate } from "react-router-dom";
 
-const id = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_id;
+
+
+
 
 export default function ReceivedMaterialVendor() {
+
+  const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
+  const id = JSON.parse(localStorage.getItem("loggedUser")).company.company_id;
   const initialState={
     company_id:id,
     part_id: 0,
@@ -21,6 +26,8 @@ export default function ReceivedMaterialVendor() {
     }
   
   }
+
+  const [successMessage, setSuccessMessage] = useState("");
   const sendData = (e) => {
     e.preventDefault();
 
@@ -32,13 +39,20 @@ export default function ReceivedMaterialVendor() {
 
     fetch("http://localhost:8080/savePartInStock",reqOption)
     .then(resp => {if(resp.ok){
-      alert("insertion successfull");
+      //alert("insertion successfull");
      return resp.text();
     }
     else
      throw new Error("server error");
     })
-    .then(text => text.length ? JSON.parse(text) : {})
+    .then((text) => {
+      if (text.length) {
+        // If data submission was successful
+        setSuccessMessage("part received successfully");
+      }
+      return text;
+    })
+    //.then(text => text.length ? JSON.parse(text) : {})
     .catch((Error)=>alert("server error . try again later")) 
     console.log(formData) 
 }
@@ -48,7 +62,7 @@ const[formData, dispatch] = useReducer(reducer , initialState );
 const[part,setPart] = useState([]);
 
 useEffect(()=>{
-    fetch(`http://localhost:8080/getAllParts`)
+    fetch(`http://localhost:8080/getPart`)
       .then(response => response.json())
       .then(partdata => setPart(partdata));
       console.log(part)      
@@ -61,7 +75,11 @@ const handleGoBack=() =>{
 
   return (
     <div className="center-content">
+      <h5 style={{backgroundColor:"green"}}>Company: {data}</h5>
       <h2>Part received from vendor</h2>
+      <h3>{successMessage && (
+          <p style={{ color: "green", fontSize: "20px" }}>{successMessage}</p>
+        )}</h3>
       <div className="form-container">
         <form >
           <table>
@@ -102,7 +120,7 @@ const handleGoBack=() =>{
           </div>
         </form>
       </div>
-      <p>{JSON.stringify(formData)}</p>
+      {/*<p>{JSON.stringify(formData)}</p> */}
      
     </div>
     

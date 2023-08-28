@@ -5,10 +5,8 @@ import { Route, Routes , Link } from 'react-router-dom';
 
 function StoreComp(){
 
-  const name = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_name;
-
-//const [data,setData]=useState(null);
-
+      //const [data,setData]=useState(null);
+        const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
     // useEffect(()=>{
     //     const loginId = JSON.parse(localStorage.getItem("loggedUser")).login_id;
 
@@ -25,7 +23,7 @@ function StoreComp(){
         
         
             <div class="col-md-4">
-              <h5 style={{backgroundColor:"green"}}>Company: {name}</h5>
+              <h5 style={{backgroundColor:"green"}}>Company: {data}</h5>
             <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
               
               <button
@@ -50,7 +48,7 @@ function StoreComp(){
             <Link to="/ReceivedMaterialVendor" className="nav-link px-3">recieved material from vendor</Link>
           </li>
           <li className="nav-item">
-            <Link to="/checkstatus" className="nav-link px-3">check status of raw material</Link>
+            <Link to="/checks" className="nav-link px-3">check status of raw material</Link>
           </li>
           <li className="nav-item">
             <Link to="/forwardMaterial" className="nav-link px-3">forward material</Link>

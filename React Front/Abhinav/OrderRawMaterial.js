@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function OrderRawMaterial() {
 
-  const id = JSON.parse(localStorage.getItem("loggedUser")).company_id.company_id;
+
+  const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
+  const id = JSON.parse(localStorage.getItem("loggedUser")).company.company_id;
 
   const initialState={
     //OrderId: 0,
@@ -23,6 +25,10 @@ export default function OrderRawMaterial() {
     }
   
   }
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+
   const sendData = (e) => {
     e.preventDefault();
 
@@ -34,7 +40,7 @@ export default function OrderRawMaterial() {
 
     fetch("http://localhost:8080/saveRawOnlyMaterialInStock",reqOption)
     .then(resp => {if(resp.ok){
-      alert("insertion successfull");
+      //alert("insertion successfull");
      return resp.text();
     }
     else
@@ -43,7 +49,14 @@ export default function OrderRawMaterial() {
      throw new Error("server error");
     }
     })
-    .then(text => text.length ? JSON.parse(text) : {})
+    .then((text) => {
+      if (text.length) {
+        // If data submission was successful
+        setSuccessMessage("order succsessfully submited");
+      }
+      return text;
+    })
+   // .then(text => text.length ? JSON.parse(text) : {})
     .catch((Error)=>alert("server error . try again later")) 
     console.log(formData) 
 }
@@ -62,7 +75,7 @@ const[formData, dispatch] = useReducer(reducer , initialState );
 //to retrive Product details
 const [RawMaterial, setRawMaterial] = useState([]);
 useEffect(()=>{
-  fetch(`http://localhost:8080/getAllMaterial`)
+  fetch(`http://localhost:8080/getrawmaterial`)
   .then(response => response.json())
   .then(RawMaterialData => setRawMaterial(RawMaterialData));
     console.log(RawMaterial) 
@@ -73,7 +86,11 @@ const handleGoBack=() =>{
 }
   return (
     <div className="center-content">
+       <h5 style={{backgroundColor:"green"}}>Company: {data}</h5>
       <h2>Order Raw Material</h2>
+      <h2>{successMessage && (
+          <p style={{ color: "green", fontSize: "20px" }}>{successMessage}</p>
+        )}</h2>
       <div className="form-container">
         <form >
           <table>
@@ -130,7 +147,7 @@ const handleGoBack=() =>{
           </div>
         </form>
       </div>
-      <p>{JSON.stringify(formData)}</p>
+      {/*<p>{JSON.stringify(formData)}</p> */}
      
     </div>
     
