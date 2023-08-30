@@ -42,7 +42,7 @@ export default  function CheckS()
         .then(data => setDt(data))
       
         
-        //console.log(formData) 
+       
     }
 
     const [RawMaterial, setRawMaterial] = useState([]);
