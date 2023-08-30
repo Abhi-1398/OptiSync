@@ -9,7 +9,6 @@ export default function OrderRawMaterial() {
   const id = JSON.parse(localStorage.getItem("loggedUser")).company.company_id;
 
   const initialState={
-    //OrderId: 0,
     company_id:id,
     raw_material_id:0,
     raw_material_qty:0,
@@ -40,7 +39,6 @@ export default function OrderRawMaterial() {
 
     fetch("http://localhost:8080/saveRawOnlyMaterialInStock",reqOption)
     .then(resp => {if(resp.ok){
-      //alert("insertion successfull");
      return resp.text();
     }
     else
@@ -56,23 +54,13 @@ export default function OrderRawMaterial() {
       }
       return text;
     })
-   // .then(text => text.length ? JSON.parse(text) : {})
     .catch((Error)=>alert("server error . try again later")) 
     console.log(formData) 
 }
 
 const[formData, dispatch] = useReducer(reducer , initialState );
 
-//const[order,setOrder] = useState([]);
 
-// useEffect(()=>{
-//     fetch(`http://localhost:8080/getAllOrders`)
-//       .then(response => response.json())
-//       .then(orderdata => setOrder(orderdata));
-//       console.log(order)      
-// },[]);
-
-//to retrive Product details
 const [RawMaterial, setRawMaterial] = useState([]);
 useEffect(()=>{
   fetch(`http://localhost:8080/getrawmaterial`)
@@ -95,23 +83,7 @@ const handleGoBack=() =>{
         <form >
           <table>
             <tbody>
-              {/* <tr>
-                <td>
-                  <label htmlFor="OrderId" className="form-label" >OrderId :</label>
-                </td>
-                <td>
-                <select name="OrderId" className="form-select" id="OrderId"
-                onChange={(e)=>{dispatch({type:'update',fld:'OrderId',val:e.target.value})}}>
-                      <option selected>Select Order</option>
-                     {
-                         order.map(v => {
-                             return (<option key={v.order_id} value={v.order_id} > {v.order_id} </option>
-                             );
-                         })
-                     }
-                </select>
-                </td>
-              </tr> */}
+              
               <tr>
                 <td>
                   <label htmlFor="raw_material_id" className="form-label" >RawMaterial name:</label>
