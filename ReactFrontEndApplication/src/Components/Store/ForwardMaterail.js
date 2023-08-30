@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 export default  function ForwardMaterial()
 {
+
   const id = JSON.parse(localStorage.getItem("loggedUser")).company_id;
 const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
-
 
     const initialState={
         order_id:0,
