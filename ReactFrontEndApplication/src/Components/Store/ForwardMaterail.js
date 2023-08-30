@@ -58,7 +58,6 @@ const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name
           }
           return text;
         })
-       // .then(text => text.length ? JSON.parse(text) : {})
         .catch((Error)=>alert("server error . try again later")) 
         console.log(formData) 
     }
