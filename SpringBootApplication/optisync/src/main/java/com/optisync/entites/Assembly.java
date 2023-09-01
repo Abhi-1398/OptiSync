@@ -35,38 +35,54 @@ public class Assembly {
 	Part part_id;
 	
 	@Column
-	int Received_product_qty;
+	int received_product_qty;
 	
 	@Column
-	int targeted_qty;
+	int targeted_value;
 	
 	@Column
-	int acheived_qty;
+	int acheive;
 	
 	@Column
 	int current_qty;
+	
+	@Column
+	String Assembler_name;
 
 	public Assembly() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
+	
+	public Assembly(Timestamp date, Orders order_id, Part part_id, int received_product_qty) {
+		super();
+		this.date = date;
+		this.order_id = order_id;
+		this.part_id = part_id;
+		this.received_product_qty = received_product_qty;
+	}
+
 
 	public Assembly(Orders order_id, Part part_id, int received_product_qty) {
 		super();
 		this.order_id = order_id;
 		this.part_id = part_id;
-		Received_product_qty = received_product_qty;
+		this.received_product_qty = received_product_qty;
 	}
 
-	public Assembly(Timestamp date, Orders order_id, Part part_id, int received_product_qty, int targeted_qty,
-			int acheived_qty, int current_qty) {
+
+	public Assembly(Timestamp date, Orders order_id, Part part_id, int received_product_qty, int targeted_value,
+			int acheive, int current_qty, String assembler_name) {
 		super();
 		this.date = date;
 		this.order_id = order_id;
 		this.part_id = part_id;
-		Received_product_qty = received_product_qty;
-		this.targeted_qty = targeted_qty;
-		this.acheived_qty = acheived_qty;
+		this.received_product_qty = received_product_qty;
+		this.targeted_value = targeted_value;
+		this.acheive = acheive;
 		this.current_qty = current_qty;
+		Assembler_name = assembler_name;
 	}
 
 	public int getAssembly_entry_no() {
@@ -102,27 +118,27 @@ public class Assembly {
 	}
 
 	public int getReceived_product_qty() {
-		return Received_product_qty;
+		return received_product_qty;
 	}
 
 	public void setReceived_product_qty(int received_product_qty) {
-		Received_product_qty = received_product_qty;
+		this.received_product_qty = received_product_qty;
 	}
 
-	public int getTargeted_qty() {
-		return targeted_qty;
+	public int getTargeted_value() {
+		return targeted_value;
 	}
 
-	public void setTargeted_qty(int targeted_qty) {
-		this.targeted_qty = targeted_qty;
+	public void setTargeted_value(int targeted_value) {
+		this.targeted_value = targeted_value;
 	}
 
-	public int getAcheived_qty() {
-		return acheived_qty;
+	public int getAcheive() {
+		return acheive;
 	}
 
-	public void setAcheived_qty(int acheived_qty) {
-		this.acheived_qty = acheived_qty;
+	public void setAcheive(int acheive) {
+		this.acheive = acheive;
 	}
 
 	public int getCurrent_qty() {
@@ -132,8 +148,17 @@ public class Assembly {
 	public void setCurrent_qty(int current_qty) {
 		this.current_qty = current_qty;
 	}
-	
-	
+
+	public String getAssembler_name() {
+		return Assembler_name;
+	}
+
+	public void setAssembler_name(String assembler_name) {
+		Assembler_name = assembler_name;
+	}
+
+
 	
 }
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
