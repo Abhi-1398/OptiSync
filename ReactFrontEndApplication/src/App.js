@@ -65,15 +65,6 @@ function App() {
                 <Link to="/Plan" className="nav-link px-3"> Registration </Link>
               </li>
 
-              {/* <li className="nav-item">
-                <Link to="/forgetbymanager" className="nav-link px-3">forget by manager </Link>
-              </li>
-               
-              <li className="nav-item">
-                <Link to="/forgetbyadmin" className="nav-link px-3">forget by admin </Link>
-              </li> */}
-
-            
               
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Modules</a>
