@@ -39,7 +39,7 @@ export default function ReceivedMaterialVendor() {
 
     fetch("http://localhost:8080/savePartInStock",reqOption)
     .then(resp => {if(resp.ok){
-      //alert("insertion successfull");
+     
      return resp.text();
     }
     else
@@ -52,7 +52,7 @@ export default function ReceivedMaterialVendor() {
       }
       return text;
     })
-    //.then(text => text.length ? JSON.parse(text) : {})
+   
     .catch((Error)=>alert("server error . try again later")) 
     console.log(formData) 
 }

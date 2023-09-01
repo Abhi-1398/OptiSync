@@ -4,20 +4,8 @@ import OrderRawMaterial from "./OrderRawMaterial";
 import { Route, Routes , Link } from 'react-router-dom';
 
 function StoreComp(){
-
-      //const [data,setData]=useState(null);
         const data = JSON.parse(localStorage.getItem("loggedUser")).company.company_name;
-    // useEffect(()=>{
-    //     const loginId = JSON.parse(localStorage.getItem("loggedUser")).login_id;
-
-    //     fetch("http://localhost:8080/getObject?login_id="+loginId)
-    //     .then(resp=>resp.json())
-    //     .then(obj => {
-    //         localStorage.setItem("loggedStore",JSON.stringify(obj))
-    //         setData(obj)
-    //     })
-
-    // },[])
+   
     return(
 
         

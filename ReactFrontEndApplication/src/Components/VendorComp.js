@@ -1,14 +1,8 @@
 import React ,{ useState ,useReducer, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 
 
 export default function VendorComp(){
-  const navigate=useNavigate();
-  const navigateToHome=()=>{
-    navigate("/Setup");
-
-  }
 
   const initialState={
     master_vendor_name:"",
@@ -27,6 +21,8 @@ const reducer = (state, action) => {
 
 const[formData, dispatch] = useReducer(reducer , initialState );
 const [vendorData, setVendor] = useState([]);
+
+
 
 useEffect(()=>{
   fetch(`http://localhost:8080/allVendors`)
@@ -55,7 +51,26 @@ const sendData = (e) => {
   .then(text => text.length ? JSON.parse(text) : {})
   .catch((Error)=>alert("server error . try again later")) 
   console.log(formData) 
+
+
 }
+
+const[selectvendor,setSelectedvendor]=useState();
+const handlevendorChange=(e)=>{
+  fetch(`http://localhost:8080/getpartbypid?id=${e}`)
+          .then(response => response.json())
+          .then(vendorData => setVendor(vendorData));
+
+}
+
+const[setSelectedproduct]=useState();
+const handleproductChange=(e)=>{
+  fetch(`http://localhost:8080/getpartbypid?id=${e}`)
+          .then(response => response.json())
+          .then(partData => setVendor(partData));
+
+}
+
 
     return(
 
@@ -66,34 +81,42 @@ const sendData = (e) => {
           <table>
             <tbody>
               <tr>
+              <div>
                 <td>
-                  <label htmlFor="master_vendor_id" className="form-label" >Vendor Name:</label>
-                </td>
-                <td>
-                <select name="master_vendor_id" className="form-select" id="master_vendor_id"
-                onChange={(e)=>{dispatch({type:'update',fld:'master_vendor_id',val:e.target.value})}}>
-                    <option value="option selected">Vendor option</option>
+          <label htmlFor="master_vendor_part_name">Vendor Part:</label>
+          </td>
+          <td>
+      <select name="master_vendor_part_name" className="form-select" id="master_vendor_part_name" value={selectvendor}
+                  onChange={(e)=>
                     {
-                         vendorData.map(v => {
-                             return (<option key={v.master_vendor_id} value={v.master_vendor_id} > {v.master_vendor_name} </option>
-                             );
-                         })
-                     }
-                    </select>
-                </td>
-              </tr>
-              <tr>
-              <td>
-              <label htmlFor="master_vendor_id" className="form-label" >Vendor PartName:</label>
-                </td>
-                <td>
-                <select name="master_vendor_id" className="form-select" id="master_vendor_id"
-                onChange={(e)=>{dispatch({type:'update',fld:'master_vendor_id',val:e.target.value})}}>
-                    
+                      dispatch({type:'update',fld:'master_vendor_part_name', val:e.target.value})
+                      setSelectedvendor(e.target.value);
+                        handlevendorChange(e.target.value);
+                    }
+                  }>
                     <option value="option selected">Vendor Part</option>
                     {
                          vendorData.map(v => {
                              return (<option key={v.master_vendor_id} value={v.master_vendor_id} > {v.master_vendor_part_name} </option>
+                             );
+                         })
+                     }
+                    </select>
+                    </td>
+      </div>
+               </tr>
+              <tr>
+              <td>
+              <label htmlFor="master_vendor_name" className="form-label" >Vendor Name:</label>
+                </td>
+                <td>
+                <select name="master_vendor_name" className="form-select" id="master_vendor_name"
+                onChange={(e)=>{dispatch({type:'update',fld:'master_vendor_name',val:e.target.value})}}>
+                    
+                    <option value="option selected">Vendor Name</option>
+                    {
+                         vendorData.map(v => {
+                             return (<option key={v.master_vendor_id} value={v.master_vendor_id} > {v.master_vendor_name} </option>
                              );
                          })
                      }
@@ -110,11 +133,8 @@ const sendData = (e) => {
             <button type="submit" onClick={(e)=>sendData(e)}>Submit</button>
             <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
           </div>
-          <br/>
-          <button type="button" onClick={navigateToHome}>Home</button>
-    </div>
- 
 
+    </div>
     
     
     //     <div>
