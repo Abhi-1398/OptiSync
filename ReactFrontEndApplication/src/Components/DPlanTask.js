@@ -2,8 +2,6 @@ import { useState, useEffect,useReducer } from "react";
 import "./MNewOrder.css";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function DPlanTask() {
     const navigate=useNavigate()
     const change=()=>{
@@ -112,7 +110,8 @@ export default function DPlanTask() {
 
     const handleUpdateClick = (e) => {
             e.preventDefault();
-            setUpdateClicked(true);   
+            setUpdateClicked(true); 
+            setSuccessMessage("Please Enter Today's Acheived Quantity");  
     };
 
     const [successMessage, setSuccessMessage] = useState("");
@@ -121,7 +120,6 @@ export default function DPlanTask() {
         <div className="center-content">
             <h1>Plan Your Daily Task</h1>
             <div className="form-container">
-                {/* Display the success message */}
         {successMessage && (
           <p style={{ color: "green", fontSize: "24px" }}>{successMessage}</p>
         )}
@@ -190,12 +188,9 @@ export default function DPlanTask() {
                                 onChange={(e)=>{dispatch({type:'update',fld:'dispatcherNameId',val:e.target.value})}} />
                             </td>
                             <td>
-                              <input
-                                type="number"
-                                name="acheivedQty"
-                                id="acheivedQtyId"
-                                disabled={!updateClicked} 
+                              <input type="number" name="acheivedQty" id="acheivedQtyId" disabled={!updateClicked} 
                                 placeholder="0"
+                                onChange={(e)=>{dispatch({type:'update',fld:'acheivedQtyId',val:e.target.value})}}
                                />                               
                             </td>
                         </tr>
@@ -204,7 +199,7 @@ export default function DPlanTask() {
                     <button  onClick={sendTask}>
                             Start Daily Task
                     </button> &nbsp;&nbsp;
-                    <button onClick={handleUpdateClick}>
+                    <button onClick={handleUpdateClick }  >
                             Update Daily Task
                     </button>
                     &nbsp;&nbsp;      
@@ -220,4 +215,4 @@ export default function DPlanTask() {
                     </button>
         </div>
     )
-} 
+}  
