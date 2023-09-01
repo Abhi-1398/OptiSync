@@ -60,7 +60,7 @@ export default function AandQAReceivedQty(){
     
     //to retrive Product details
     const [partData, setPart] = useState([]);
-    const updateProduct = (()=>{
+    const updatePart = (()=>{
       fetch(`http://localhost:8080/getallpartbyid?id=${id.company_id}`)
       .then(response => response.json())
       .then(partData => setPart(partData));

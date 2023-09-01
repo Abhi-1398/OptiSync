@@ -151,7 +151,7 @@ useEffect(()=>{
                 onChange={(e)=>{dispatch({type:'update',fld:'product_id',val:e.target.value})}}  >
                       <option selected>Select Product</option>
                      {
-                         RawMaterial.map(z => {
+                         Product.map(z => {
                              return (<option key={z.product_id} value={z.product_id} > {z.name} </option>
                              );
                          })

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import QualityAssemblyComp from "./QualityAssemblyComponent";
+import AandQAReceivedQty from "./A&QAReceivedQty";
+import AandQAPlanTask from "./A&QAPlanTask";
+import ForwardProduct from "./ForwordProduct";
 let AssemblyQA=()=>
 {
     return(
@@ -49,7 +51,7 @@ let AssemblyQA=()=>
             <Route path='receivedp' element={<AandQAReceivedQty/>}/>
     
              <Route path='plantaskAQA' element={<AandQAPlanTask/>}/>
-            
+            <Route path="forwordToD" element={<ForwardProduct/>}/>
              </Routes>
             
             
