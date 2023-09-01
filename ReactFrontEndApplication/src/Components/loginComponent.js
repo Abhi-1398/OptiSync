@@ -157,8 +157,8 @@ function LoginComponent(){
                 <form className="align-middle  mx-auto col-10 col-md-8 col-lg-6">
                    <table >
                     <tr>
-                        <td><label htmlFor="username" className="form-label">LoginId:</label></td>
-                        <td><input type="text" id="username" name="username" required value={info.username.value}
+                        <td ><label htmlFor="username" className="form-label">LoginId:</label></td>
+                        <td colSpan={2}><input size={30} type="text" id="username" name="username" required value={info.username.value}
                         onChange={(e)=>{handleChange("username",e.target.value)}}/></td>
                         <td>
                         <div style={{ display: info.username.touched && info.username.hasError?"block":"none" }}>
@@ -168,7 +168,7 @@ function LoginComponent(){
                     </tr>
                     <tr>
                             <td><label htmlFor="password">Password:</label></td>
-                            <td><input type="password" id="password" name="password" required value={info.password.value}
+                            <td colSpan={2}><input size={30} type="password" id="password" name="password" required value={info.password.value}
                             onChange={(e)=>{handleChange("password",e.target.value)}}/></td>
                             <td>
                             <div style={{ display: info.password.touched && info.password.hasError?"block":"none" }}>
@@ -179,17 +179,23 @@ function LoginComponent(){
                     <tr>
                         <td></td>
                             
-                           <td> <button type="submit" class="btn btn-primary" onClick={(e)=>{sendData(e)}}>Login</button>                   
+                           <td> <button type="submit" class="btn btn-primary" onClick={(e)=>{sendData(e)}}>Login</button> </td>
+                           <td><button type="button" className="btn btn-primary" onClick={navigateToRegistration}>Registration</button></td>
                             {/*  <a href="/" onClick={forget}> Forget Password ?</a><br/> */}
-                             <Link to="/forgetpass" className="nav-link px-3"> forget password? </Link>
+                            {/* <td> <Link to="/forgetpass" className="nav-link px-3"> forget password? </Link>
+                             <Routes>
+                             <Route path="forgetpass" element={<ForgetpassComp/>}/>
+                             </Routes>
+                             </td>  */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        {/* <td><button type="button" className="btn btn-primary" onClick={navigateToRegistration}>Registration</button></td> */}
+                        <td colSpan={2}> <Link to="/forgetpass" className="nav-link px-3"> forget password? </Link>
                              <Routes>
                              <Route path="forgetpass" element={<ForgetpassComp/>}/>
                              </Routes>
                              </td> 
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><button type="button" className="btn btn-primary" onClick={navigateToRegistration}>Registration</button></td>
                     </tr>
                     </table>
                 

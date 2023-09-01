@@ -94,7 +94,7 @@ const sendData = (e) => {
             <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
           </div>
 
-<p>{JSON.stringify(formData)}</p>
+
     </div>
 
   );

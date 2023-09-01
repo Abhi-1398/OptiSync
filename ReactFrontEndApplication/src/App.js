@@ -42,6 +42,10 @@ import Forgetpassbymanager from './Components/Forgetpassbymanager';
 import Forgetpassbyadmin from './Components/Forgetpassbyadmin';
 import CheckS from './Components/CheckS';
 import Checkcompanystatus from './Components/Checkcompanystatus';
+import AssemblyQA from './Components/A&QAComponent';
+import AandQAReceivedQty from './Components/A&QAReceivedQty';
+import AandQAPlanTask from './Components/A&QAPlanTask';
+import AQAForwardProduct from './Components/A&QAForwardProduct';
 
 function App() {
 
@@ -93,7 +97,7 @@ function App() {
     
           <Route path='/Production' element={<ProductionComp/>}></Route>
           <Route path='/Store' element={<StoreComp/>}></Route>
-          <Route path='/QualityAssembly' element={<QualityAssemblyComp/>}></Route>
+          <Route path='/Assembly' element={<AssemblyQA/>}></Route>
           <Route path='/Registration' element={<Register />}></Route>
           <Route path='pendingrequest' element={<PendingReq/>}/>
           <Route path='/Plan' element={<Plan />}></Route>
@@ -125,6 +129,10 @@ function App() {
              <Route path='forgetbyadmin' element={<Forgetpassbyadmin/>}></Route>
              <Route path='checks' element={<CheckS/>}></Route>
              <Route path='checkcompany' element={<Checkcompanystatus/>}></Route>
+             <Route path='receivedp' element={<AandQAReceivedQty/>}/>
+    
+    <Route path='plantaskAQA' element={<AandQAPlanTask/>}/>
+   <Route path="forwordToD" element={<AQAForwardProduct/>}/>
 
         </Routes>  
 

@@ -11395,11 +11395,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CDAC\\Final-Project\\dotnet\\optisync1\\optisync1.csproj",
+      "projectUniqueName": "C:\\Users\\91879\\Desktop\\Shirish branch git\\OptiSync\\DotNet\\optisync1\\optisync1.csproj",
       "projectName": "optisync1",
-      "projectPath": "D:\\CDAC\\Final-Project\\dotnet\\optisync1\\optisync1.csproj",
+      "projectPath": "C:\\Users\\91879\\Desktop\\Shirish branch git\\OptiSync\\DotNet\\optisync1\\optisync1.csproj",
       "packagesPath": "C:\\Users\\91879\\.nuget\\packages\\",
-      "outputPath": "D:\\CDAC\\Final-Project\\dotnet\\optisync1\\obj\\",
+      "outputPath": "C:\\Users\\91879\\Desktop\\Shirish branch git\\OptiSync\\DotNet\\optisync1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\91879\\AppData\\Roaming\\NuGet\\NuGet.Config",

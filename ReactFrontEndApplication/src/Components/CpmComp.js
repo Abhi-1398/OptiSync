@@ -169,7 +169,7 @@ const handlepartChange=(e)=>{
                 <button type="button" onClick={()=>navigate("/Setup")}>Back</button>
           </div>
          
-    <p>{JSON.stringify(formData)}</p>
-        </div>
+{/*     <p>{JSON.stringify(formData)}</p>
+ */}        </div>
     )
 }

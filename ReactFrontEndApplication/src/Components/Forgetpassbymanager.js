@@ -29,7 +29,7 @@ export default function Forgetpassbymanager()
         <div>
             <h1>Forget password Request</h1>
 
-                                <table border={1}>
+                                <table className="submitted-data-table">
                                 <th>User Name</th>
 
                                 {fstatus.map((pl) => (

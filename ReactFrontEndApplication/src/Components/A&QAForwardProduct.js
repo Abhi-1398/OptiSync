@@ -1,7 +1,7 @@
 import React, { useState ,useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default  function A&QAForwardProduct()
+export default  function AQAForwardProduct()
 {
     const id = JSON.parse(localStorage.getItem("loggedUser")).company_id;
 
@@ -177,7 +177,7 @@ useEffect(()=>{
           </div>
         </form>
       </div>
-      <p>{JSON.stringify(formData)}</p>
+      
      
         </div>
     )

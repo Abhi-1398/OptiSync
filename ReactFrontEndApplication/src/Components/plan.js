@@ -32,11 +32,11 @@ const navigatetoregister = ()=>{
             
             <label  htmlFor="plan">Select Plan:</label>
 
-
+                        <div > 
                   
-                            <table border={1}>
+                            <table className="submitted-data-table">
                             
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Plan Name</th>
                                 <th>No of User</th>
                                 <th>Duration</th>
@@ -62,6 +62,7 @@ const navigatetoregister = ()=>{
     ))}
                                 
                             </table>
+                            </div>
                             <div> <button type="button" onClick={navigatetoregister}> Proceed to Registration</button></div>
                             
                        

@@ -48,7 +48,9 @@ export default function AandQAReceivedQty(){
     }
     
     const[formData, dispatch] = useReducer(reducer , initialState );
-    const id = (JSON.parse(localStorage.getItem('loggedUser'))).company;
+    // const id = (JSON.parse(localStorage.getItem('loggedUser'))).company;
+    const id = JSON.parse(localStorage.getItem('loggedUser'));
+    console.log("Shiriiish"+id.company);
     //to retrive order details
     const [getAllOrders, setAllOrders] = useState([]);
      const updateOrder = (()=>{
