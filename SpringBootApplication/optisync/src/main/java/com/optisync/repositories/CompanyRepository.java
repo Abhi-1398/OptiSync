@@ -24,4 +24,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	@Modifying
 	@Query(value="update company u set u.plan_enddate= date_add(curdate(),INTERVAL :num DAY) where u.company_id=:id",nativeQuery = true)
     public int changeenddate(int num,int id);
+     @Modifying
+	@Query(value = "update company u set u.plan_startdate=curdate() where u.company_id=:id",nativeQuery = true)
+	public int changestartdate(int id);
 }

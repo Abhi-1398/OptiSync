@@ -64,14 +64,18 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/changedate")
-	public int changeenddate(@RequestParam int id){
+	public int changeenddate(@RequestParam int id)
+	{
 		Company c=cservice.getbyid(id);
 		Plans p= c.getPlans();
 		int duration=p.getDuration();
 		
 		cservice.changeenddate(duration, id);
+		cservice.changestartdate(id);
 		
-		return 1;	
+		return 1;
+		
+		
 	}
 
 }

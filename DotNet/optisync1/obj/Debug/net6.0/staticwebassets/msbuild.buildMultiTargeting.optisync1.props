@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\optisync1.props" />
+</Project>

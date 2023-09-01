@@ -192,7 +192,7 @@ function LoginComponent(){
                         <td><button type="button" className="btn btn-primary" onClick={navigateToRegistration}>Registration</button></td>
                     </tr>
                     </table>
-                    <p>{JSON.stringify(info)}</p>
+                
                 </form>
               
             </div>

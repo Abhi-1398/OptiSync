@@ -41,6 +41,7 @@ import DailyTask from './Components/PNewTask';
 import Forgetpassbymanager from './Components/Forgetpassbymanager';
 import Forgetpassbyadmin from './Components/Forgetpassbyadmin';
 import CheckS from './Components/CheckS';
+import Checkcompanystatus from './Components/Checkcompanystatus';
 
 function App() {
 
@@ -123,6 +124,8 @@ function App() {
              <Route path='approvedpassword' element={<Forgetpassbymanager/>}></Route>
              <Route path='forgetbyadmin' element={<Forgetpassbyadmin/>}></Route>
              <Route path='checks' element={<CheckS/>}></Route>
+             <Route path='checkcompany' element={<Checkcompanystatus/>}></Route>
+
         </Routes>  
 
     </div>

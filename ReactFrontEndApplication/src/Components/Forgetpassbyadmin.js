@@ -15,10 +15,15 @@ export default function Forgetpassbyadmin(){
           .then(fstatus => setFstatus(fstatus));
              
     },[]);
-
+     const[details,setDetails]=useState([]);
+     const[email,setEmail]=useState()
     const[btn,setbtn]=useState("grey")
     const colorchange=(e)=>{
         setbtn("green");
+       setEmail(e.company.email)
+        setDetails(e);
+
+
         
     
         
@@ -36,12 +41,23 @@ export default function Forgetpassbyadmin(){
                                      <tr>
                                             
                                         <td> {pl.username}</td>
-{                                        <td> <button type="button" value={pl.login_id} onClick={()=>{colorchange(pl.login_id)}} style={{backgroundColor:btn}}>Approve</button></td>
+{                                        <td> <button type="button" value={pl.login_id} onClick={()=>{colorchange(pl)}} style={{backgroundColor:btn}}>Approve</button></td>
 }                                        </tr>
                                     
                                     ))}
                                 
                             </table>
+                            </div>
+                            <div>
+                                <table className="submitted-data-table">
+                                    <th>User Name</th>
+                                    <th>Password</th>
+                                    <th>Email Address</th>
+                                    <tr><td>{details.username}</td>
+                                    <td>{details.password}</td>
+                                    <td>{email}</td></tr>
+
+                                </table>
                             </div>
                             <br/>
                             <button onClick={navigatetoHome}>Back To Home</button>

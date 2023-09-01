@@ -35,4 +35,8 @@ public class CompanyService {
 	 public int changeenddate(int num,int id){
 	    return crepo.changeenddate(num, id);
 	 }
+          public int changestartdate(int id)
+	    {
+	    	return crepo.changestartdate(id);
+	    }
 }
