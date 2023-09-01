@@ -2,8 +2,10 @@ import { useState,useEffect,useReducer } from "react"
 import { useNavigate } from "react-router-dom";
 
 export default function DispatchReceivedQty(){
-  const id = (JSON.parse(localStorage.getItem('loggedUser'))).company_id;
-    const initialState={
+
+  const id=(JSON.parse(localStorage.getItem('loggedUser')).company).company_id;
+  
+  const initialState={
         dateId: "",
         orderId: 0,
         productId: 0,
@@ -41,6 +43,7 @@ export default function DispatchReceivedQty(){
           if (text.length) {
             // If data submission was successful
             setSuccessMessage("Data Submmited Succesfully");
+            setSubmitted(true);
           }
           return text;
         })
@@ -53,7 +56,7 @@ export default function DispatchReceivedQty(){
     //to retrive order details
     const [getAllOrders, setAllOrders] = useState([]);
     useEffect(()=>{
-      fetch(`http://localhost:8080/getordersbyid?id=5`)
+      fetch(`http://localhost:8080/getordersbyid?id=${id}`)
       .then(response => response.json())
       .then(getAllOrders => setAllOrders(getAllOrders));
       console.log(getAllOrders)      
@@ -62,7 +65,7 @@ export default function DispatchReceivedQty(){
     //to retrive Product details
     const [productData, setProduct] = useState([]);
     useEffect(()=>{
-      fetch(`http://localhost:8080/getallproductbyid?id=5`)
+      fetch(`http://localhost:8080/getallproductbyid?id=${id}`)
       .then(response => response.json())
       .then(productData => setProduct(productData));
       console.log(productData) 
@@ -70,6 +73,7 @@ export default function DispatchReceivedQty(){
 
     const [successMessage, setSuccessMessage] = useState("");
 
+    const [submitted, setSubmitted] = useState(false);
     return(
         <div className="center-content">
       <h2>Recieved Dispatch Qty</h2>
@@ -131,8 +135,8 @@ export default function DispatchReceivedQty(){
             </tbody>
           </table>
           <div className="submit-button-container">
-            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button> &nbsp; &nbsp;
-            <button type="reset"  onClick={()=>{dispatch({type:'reset'})}}>Clear</button>
+            <button type="submit" onClick={(e)=>sendData(e)}disabled={submitted}>Submit</button> &nbsp; &nbsp;
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'}); setSubmitted(false);setSuccessMessage("")}  }>Clear</button>
           </div>
         </form>
                      <br/>

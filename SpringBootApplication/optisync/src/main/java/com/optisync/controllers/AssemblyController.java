@@ -46,7 +46,7 @@ public class AssemblyController {
 		return assemblyService.getAssemblyByCompanyId(id);
 	}
 	
-	@PutMapping("/saveTask")
+	@PutMapping("/saveaqaTask")
 	public int saveTask(@RequestBody NewTask task) {
 		int qty = task.getTargetedQtyId();
 		String name = task.getDispatcherNameId();
@@ -55,7 +55,7 @@ public class AssemblyController {
 		return assemblyService.saveTask(qty,name, date,order);
 	}
 	
-	@PutMapping("/updateTask")
+	@PutMapping("/updateaqaTask")
 	public int updateTask(@RequestBody NewTask task) {
 		int qty = task.getAcheivedQtyId();
 		String date = task.getDateId();

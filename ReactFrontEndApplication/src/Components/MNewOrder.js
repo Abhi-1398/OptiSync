@@ -43,6 +43,7 @@ export default function NewOrder() {
       if (text.length) {
         // If data submission was successful
         setSuccessMessage("New Order Has Been Placed Successfully");
+        setSubmitted(true);
       }
       return text;
     })
@@ -68,6 +69,10 @@ useEffect(()=>{
   .then(productData => setProduct(productData));
   console.log(productData) 
 },[]);
+
+//to disable submit button
+const [submitted, setSubmitted] = useState(false);
+
   return (
     <div className="center-content">
       <h2>Place New Order</h2>
@@ -79,7 +84,7 @@ useEffect(()=>{
           <table>
             <tbody>
               <tr>
-                <td>
+                <td colSpan={2}>
                   <label htmlFor="clientId" className="form-label" >Client Name:</label>
                 </td>
                 <td>
@@ -113,12 +118,6 @@ useEffect(()=>{
                      }
                 </select>
                   
-
-                  {/*
-                    <input type="number" id="productId" name="productId" value={formData.productId}
-                    onChange={(e)=>{dispatch({type:'update',fld:'productId',val:e.target.value})}} required/>
-                  */}
-                  
                 </td>
                 <td>
                   <label htmlFor="productQty" className="form-label" >Order Quantity:</label>
@@ -147,8 +146,8 @@ useEffect(()=>{
             </tbody>
           </table>
           <div className="submit-button-container">
-            <button type="submit" onClick={(e)=>sendData(e)}>Submit</button> &nbsp;&nbsp;
-            <button type="reset"  onClick={()=>{dispatch({type:'reset'}) ; setSuccessMessage("");}}>Clear</button>
+            <button type="submit" onClick={(e)=>sendData(e)} disabled={submitted} >Submit</button> &nbsp;&nbsp;
+            <button type="reset"  onClick={()=>{dispatch({type:'reset'}) ; setSuccessMessage("");setSubmitted(false);}}>Clear</button>
           </div>
         </form>
       </div>
