@@ -107,7 +107,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'Optisync Pvt Ltd.','Shirish Gaikwad','8793467456','rajeshirish123@gmail.com','2023-08-18 00:00:00.000000',1,_binary '','2023-08-18 00:00:00.000000',NULL,_binary '','online'),(20,'Samarth Manufacturings','Sushil Chaudhari','8830889788','chaudharisushil1379@gmail.com','2023-08-31 05:30:00.000000',1,_binary '','2023-08-31 00:00:00.000000','2024-05-27 00:00:00.000000',_binary '','online'),(21,'Punjab steels and co. ','Jasbeer Singh','7894625615','punjabsteels@gmail.com','2023-08-31 05:30:00.000000',2,_binary '',NULL,NULL,_binary '\0','online');
+INSERT INTO `company` VALUES (1,'Optisync Pvt Ltd.','Shirish Gaikwad','8793467456','rajeshirish123@gmail.com','2023-08-18 00:00:00.000000',1,_binary '','2023-08-18 00:00:00.000000',NULL,_binary '','online'),(2,'Samarth Manufacturings','Sushil Chaudhari','8830889788','chaudharisushil1379@gmail.com','2023-08-31 05:30:00.000000',1,_binary '','2023-08-31 00:00:00.000000','2024-05-27 00:00:00.000000',_binary '','online'),(3,'Punjab steels and co. ','Jasbeer Singh','7894625615','punjabsteels@gmail.com','2023-08-31 05:30:00.000000',2,_binary '',NULL,NULL,_binary '\0','online');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,11 +123,11 @@ CREATE TABLE `cpm` (
   `company_id` int NOT NULL,
   `product_id` int NOT NULL,
   `part_id` int NOT NULL,
-  `store_ct` int NOT NULL,
-  `production_ct` int NOT NULL,
-  `vendor_ct` int NOT NULL,
-  `assembly_ct` int NOT NULL,
-  `dispatch_ct` int NOT NULL,
+  `store_ct` decimal(7,4) NOT NULL,
+  `production_ct` decimal(7,4) NOT NULL,
+  `vendor_ct` decimal(7,4) NOT NULL,
+  `assembly_ct` decimal(7,4) NOT NULL,
+  `dispatch_ct` decimal(7,4) NOT NULL,
   PRIMARY KEY (`cpm_id`),
   KEY `c_idx` (`company_id`),
   KEY `c1_idx` (`product_id`),
@@ -135,7 +135,7 @@ CREATE TABLE `cpm` (
   CONSTRAINT `c` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
   CONSTRAINT `c1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `c2` FOREIGN KEY (`part_id`) REFERENCES `parts` (`part_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,6 +144,7 @@ CREATE TABLE `cpm` (
 
 LOCK TABLES `cpm` WRITE;
 /*!40000 ALTER TABLE `cpm` DISABLE KEYS */;
+INSERT INTO `cpm` VALUES (1,2,1,1,1.0000,2.0000,1.0000,1.0000,1.0000),(2,2,1,2,1.0000,0.0000,1.0000,0.0000,0.0000),(3,2,1,3,0.0000,2.0000,2.0000,1.0000,1.0000),(4,2,1,4,1.0000,0.0000,1.0000,1.0000,1.0000),(5,2,1,5,0.0000,2.0000,2.0000,1.0000,1.0000),(6,2,1,6,1.0000,2.0000,1.0000,1.0000,1.0000);
 /*!40000 ALTER TABLE `cpm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,10 +168,8 @@ CREATE TABLE `dispatch` (
   PRIMARY KEY (`dispatch_entry_no`),
   KEY `d_idx` (`order_id`),
   KEY `d1_idx` (`product_id`),
-  KEY `d2_idx` (`dispatch_status`),
   CONSTRAINT `d` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  CONSTRAINT `d1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `d2` FOREIGN KEY (`dispatch_status`) REFERENCES `dispatch_status` (`dispatch_status_id`)
+  CONSTRAINT `d1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,29 +180,6 @@ CREATE TABLE `dispatch` (
 LOCK TABLES `dispatch` WRITE;
 /*!40000 ALTER TABLE `dispatch` DISABLE KEYS */;
 /*!40000 ALTER TABLE `dispatch` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `dispatch_status`
---
-
-DROP TABLE IF EXISTS `dispatch_status`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dispatch_status` (
-  `dispatch_status_id` int NOT NULL AUTO_INCREMENT,
-  `status_meaning` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`dispatch_status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dispatch_status`
---
-
-LOCK TABLES `dispatch_status` WRITE;
-/*!40000 ALTER TABLE `dispatch_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dispatch_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -259,7 +235,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'Shirish.admin','Shirish@admin',1,1,_binary '\0',_binary '\0'),(128,'Samart.store','Samart@store',20,3,_binary '',_binary ''),(129,'Samart.manager','Samart@manager',20,2,_binary '\0',_binary '\0'),(130,'Samart.production','Samart@production',20,4,_binary '\0',_binary '\0'),(131,'Samart.assembly','Samart@assembly',20,5,_binary '\0',_binary '\0'),(132,'Samart.dispatch','Samart@dispatch',20,6,_binary '\0',_binary '\0');
+INSERT INTO `login` VALUES (1,'Shirish.admin','Shirish@admin',1,1,_binary '\0',_binary '\0'),(2,'Samart.store','Samart@store',2,3,_binary '',_binary ''),(3,'Samart.manager','Samart@manager',2,2,_binary '\0',_binary '\0'),(4,'Samart.production','Samart@production',2,4,_binary '\0',_binary '\0'),(5,'Samart.assembly','Samart@assembly',2,5,_binary '\0',_binary '\0'),(6,'Samart.dispatch','Samart@dispatch',2,6,_binary '\0',_binary '\0');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,6 +288,7 @@ CREATE TABLE `master_vendor` (
 
 LOCK TABLES `master_vendor` WRITE;
 /*!40000 ALTER TABLE `master_vendor` DISABLE KEYS */;
+INSERT INTO `master_vendor` VALUES (1,'SS Nuts and bolt Co','Bolts'),(2,'SS nuts and bolt Co','Nuts');
 /*!40000 ALTER TABLE `master_vendor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,6 +351,7 @@ CREATE TABLE `parts` (
 
 LOCK TABLES `parts` WRITE;
 /*!40000 ALTER TABLE `parts` DISABLE KEYS */;
+INSERT INTO `parts` VALUES (1,'Driving Shaft','Shat which is joined to the hub and flang',1),(2,'Nuts','M12 nylon lock nuts',1),(3,'Hub','Block of Mild Steel which coupled with flange',1),(4,'Bolts','M12 x 3mm pitch bolts',1),(5,'Flange','Block of mild steel which is coupled with hub',1),(6,'Key','4130 mild steel for locking of flang and hub',1);
 /*!40000 ALTER TABLE `parts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,6 +406,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Universal Coupling','An universal Flang Coupling',2);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,6 +471,7 @@ CREATE TABLE `raw_materials` (
 
 LOCK TABLES `raw_materials` WRITE;
 /*!40000 ALTER TABLE `raw_materials` DISABLE KEYS */;
+INSERT INTO `raw_materials` VALUES (1,'Shaft','Mild Steel 1210 graded 50 mm shaft',1),(2,'Hub','Casted mild steel block with 1060 grade',3),(3,'flange','Casted mild steel block with 1060 grading',5),(4,'key','30mmx40m 1030 steel block',6);
 /*!40000 ALTER TABLE `raw_materials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -609,7 +589,7 @@ CREATE TABLE `vendormap` (
   KEY `v1` (`vendor_id`),
   CONSTRAINT `v1` FOREIGN KEY (`vendor_id`) REFERENCES `master_vendor` (`master_vendor_id`),
   CONSTRAINT `v2` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -618,6 +598,7 @@ CREATE TABLE `vendormap` (
 
 LOCK TABLES `vendormap` WRITE;
 /*!40000 ALTER TABLE `vendormap` DISABLE KEYS */;
+INSERT INTO `vendormap` VALUES (2,2,1,2),(1,2,2,4);
 /*!40000 ALTER TABLE `vendormap` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -630,4 +611,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-01 11:27:13
+-- Dump completed on 2023-09-01 14:06:33
