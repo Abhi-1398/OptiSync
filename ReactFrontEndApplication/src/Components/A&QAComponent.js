@@ -6,9 +6,9 @@ import AQAForwardProduct from "./A&QAForwardProduct";
 let AssemblyQA=()=>
 {
     return(
-        <div>
-      <div class="col-md-4 ">
-      <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
+      <div>
+        <div class="col-md-4 ">
+          <nav className="navbar navbar-expand-md navbar-light bg-light sidebar">
         
         <button
           className="navbar-toggler"
@@ -21,11 +21,11 @@ let AssemblyQA=()=>
   
         
         <div className="collapse navbar-collapse" id="leftNavbar">
-          <ul className="navbar-nav flex-column">
+        <ul className="navbar-nav flex-column">
           
        
     <li className="nav-item">
-      <Link to="/receivedp" className="nav-link px-3">Received Part from production</Link>
+      <Link to="/receivedp" className="nav-link px-3">Received Qty By Production</Link>
     </li>
 
     <li className="nav-item">
@@ -36,33 +36,21 @@ let AssemblyQA=()=>
       <Link to="/forwordToD" className="nav-link px-3">Forward Parts to Dispatch</Link>
     </li>
 
-   
+    </ul>
 
-
-   
-   
-         </ul>
-        </div>
-       <div>
+    </div>
+          <div>
             <Routes>
-             {/* <Route path='receivedp' element={<AssemblyQA/>}/>
-             <Route path='plantaskAQA' element={<AandQAPlanTask/>}/>
-     */}
-            <Route path='receivedp' element={<AandQAReceivedQty/>}/>
-    
-             <Route path='plantaskAQA' element={<AandQAPlanTask/>}/>
-            <Route path="forwordToD" element={<AQAForwardProduct/>}/>
-             </Routes>
-            
-            
-            
-            </div> 
-            </nav>
-</div>
-  </div>
-        
+              <Route path='receivedp' element={<AandQAReceivedQty/>}/>
+              <Route path='plantaskAQA' element={<AandQAPlanTask/>}/>
+              <Route path="forwordToD" element={<AQAForwardProduct/>}/>
+            </Routes>
+          </div> 
+        </nav>
+    </div>
 
-    );
+  </div>
+  );
 };
 
 export default AssemblyQA;

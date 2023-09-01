@@ -73,9 +73,8 @@ export default function AandQAReceivedQty(){
 
     return(
         <div className="center-content">
-      <h2>Received Qty By Dispatch</h2>
+      <h2>Received Qty By Production</h2>
       <div className="form-container">
-        {/* Display the success message */}
         {successMessage && (
           <p style={{ color: "green", fontSize: "12px" }}>{successMessage}</p>
         )}
